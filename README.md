@@ -11,7 +11,7 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 -  El nombre de una variable no puede ser una palabra reservada.
 
 # Palabras reservadas
-
+Entiendase como `<var>` un nombre de variable y `<val>` un valor, que bien puede ser númerico, booleano o de cadena
 |Palabra|Descripción| Ejemplo
 |-|-|-|
 |crea|Su función es reservar espacios de memoria, dicho de otra manera, definir variables.| `crea <tipo> <variable>`
@@ -22,7 +22,7 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 |||`crea entero vara = varb + 2 + 34 + varc`|
 |lea|Su función leer de teclado un valor y asignarlo a una variable ya declarada| `lea <variable>`
 |||`lea var` 
-|imprime|Su función es imprimir en consola algún valor o variable. **Nota:** Para concatenar se utiliza el simbolo **.** | `imprime <var>`
+|imprime|Su función es imprimir en consola algún valor o variable. **Nota**: Para concatenar se utiliza el simbolo . | `imprime <var>`
 |||`imprime "Hola_este_lenguaje_es_genial!"`|
 |||`imprime "Hola_este_lenguaje_es_genial!" . "_estoy_concatenando"`|
 |||`imprime vara . varb`|
