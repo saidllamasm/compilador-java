@@ -122,8 +122,25 @@ public class CompiladorAnalizador {
             
         } else if(instruccion.split(" ")[0].equals("imprime")){
             System.out.println("detectado imprime como inicio de instruccion. no HAGO NADA");
+            isCorrect = true;
+        } 
+        else if(instruccion.split(" ")[0].equals("lea")){
+            //System.out.println("detectado lea como inicio de instruccion. no HAGO NADA");
+            String[] lexemas = instruccion.split(" ");
+            if(lexemas.length == 2){
+                String[] res =  variablesDeclaradas.isRegisterVariable(lexemas[1]);
+                //System.out.println(CustomColors.GREEN+bk_instruccion+" success");
+                if(res[0].equals("verdadero")){
+                    System.out.println(CustomColors.GREEN+bk_instruccion+" success");
+                    isCorrect = true;
+                }else{
+                    System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_VARIABLE_NOT_DECLARE+" CE1432");
+                }
+            }else{
+                System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE1022");
+            }
         } else {
-            System.out.println(CustomColors.RED+" Inicio de renglon no reconocido");
+             System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE001");
         }
      
         /*System.out.println(CustomColors.YELLOW_BOLD+"Tabla de simbolos");

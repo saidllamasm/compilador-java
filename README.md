@@ -20,8 +20,8 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 |||`crea cadena <var>`|
 |||`crea entero <var> = <var> + <val> + <val> + <var>`|
 |||`crea entero vara = varb + 2 + 34 + varc`|
-|lee|Su función leer de teclado un valor y asignarlo a una variable ya declarada| `lee <variable>`
-|||`lee var` 
+|lea|Su función leer de teclado un valor y asignarlo a una variable ya declarada| `lea <variable>`
+|||`lea var` 
 |imprime|Su función es imprimir en consola algún valor o variable.| `imprime <variable>`
 |||`imprime "Hola_este_lenguaje_es_genial!"`|
 |asigna|Su función es darle valor a las variables ya declaradas| `asigna <variable> = 20`

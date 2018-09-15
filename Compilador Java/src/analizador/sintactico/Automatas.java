@@ -4,9 +4,11 @@ package analizador.sintactico;
 public class Automatas {
     
     private Automata INSTRUCCION_CREA[] = new Automata[8];
+    private Automata INSTRUCCION_IMPRIME[] = new Automata[3];
     
     public Automatas(){
         
+        // crea
         INSTRUCCION_CREA = crearArrayAutomata(INSTRUCCION_CREA);
        
         INSTRUCCION_CREA[0].setId(new String[]{"crea"});
@@ -48,10 +50,30 @@ public class Automatas {
             INSTRUCCION_CREA[7]
         });
         
-        INSTRUCCION_CREA[7].setId(new String[]{"+"});
+        INSTRUCCION_CREA[7].setId(new String[]{"+","-"});
         INSTRUCCION_CREA[7].setAddress(new Automata[]{
             INSTRUCCION_CREA[6]
         });
+        
+        // imprime
+        INSTRUCCION_IMPRIME = crearArrayAutomata(INSTRUCCION_IMPRIME);
+        
+        INSTRUCCION_IMPRIME[0].setId(new String[]{"imprime"});
+        INSTRUCCION_IMPRIME[0].setAddress(new Automata[]{
+            INSTRUCCION_IMPRIME[1],
+        });
+        
+        INSTRUCCION_IMPRIME[1].setId(new String[]{"<var>","<val>"});
+        INSTRUCCION_IMPRIME[1].setAddress(new Automata[]{
+            INSTRUCCION_IMPRIME[2]
+        });
+        
+        INSTRUCCION_IMPRIME[2].setId(new String[]{"."});
+        INSTRUCCION_IMPRIME[2].setAddress(new Automata[]{
+            INSTRUCCION_IMPRIME[1]
+        });
+        
+        
         
     }
     

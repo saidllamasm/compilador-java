@@ -30,8 +30,14 @@ public class Principal {
     static CompiladorAnalizador analizador = new CompiladorAnalizador();
     
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  throws IOException {
+        /*Tools t = new Tools();
+        System.out.println(t.isCorrectNameVariable("booleano"));*/
+        correr();
         
+    }    
+    
+    private static void correr() throws IOException{
         String rutaABS = "/users/saidllamas/desktop/";
         String extIN = ".txt", extOut = ".sllm";
         String content = archivo.leerArchivo(rutaABS+"fuente"+extIN);
@@ -73,6 +79,5 @@ public class Principal {
         
         for(int i = 0; i < 20; i++)
             System.out.println("");
-    }    
-    
+    }
 }

@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 public class Tools {
     
     static Vector variables_globales = new Vector(), variables_type_globales = new Vector();
-    
+    static Logs logs = new Logs();
     
     //
     //Error: ID10032
@@ -88,10 +88,29 @@ public class Tools {
     }
     
     public static boolean isCorrectNameVariable(String var){
-        String pattern = "[^\\D+]|[\\*\\.\\;\\+\\-\\_\\<\\>]";
-        Pattern pat = Pattern.compile(pattern);
-        Matcher mat = pat.matcher(var);
-        return !mat.find();
+        boolean correct = true;
+        String error_desc = logs.ERROR_VARIABLE_NAME; //usarla posteriormente para mas detalle en el log
+        for(String system : logs.PAL_RESERV){ //no coincidir con palabras reservadas
+            if (var.equals(system)){
+                correct = false;
+                break;
+            }
+        }
+        if (correct){
+            for(String system : logs.DATA_TYPES){ //no coincidir con TIPOS DE DATOS
+                if (var.equals(system)){
+                    correct = false;
+                    break;
+                }
+            }
+        }
+        if(correct){
+            String pattern = "[^\\D+]|[\\*\\.\\;\\+\\-\\_\\<\\>]";
+            Pattern pat = Pattern.compile(pattern);
+            Matcher mat = pat.matcher(var);
+            correct = !mat.find();
+        }
+        return correct;
     }
     
     // validacion de numeros, que no contenga caracteres
