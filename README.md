@@ -33,7 +33,7 @@ Entiendase como `<var>` un nombre de variable, `<val>` como un valor, que bien p
 |||`asigna <variable> = verdadero`|
 
 # Tipos de datos validos
-Entiendase como `<var>` un nombre de variable y `<val>` un valor, que bien puede ser númerico, booleano o de cadena.
+Entiendase como `<var>` un nombre de variable y `<val>` un valor, que bien puede ser númerico, booleano o de cadena
 
 |      Tipo          |Descripción          |Ejemplo                         |
 |-|-|-|
