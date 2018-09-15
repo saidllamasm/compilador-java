@@ -82,6 +82,9 @@ public class Automatas {
         return this.INSTRUCCION_CREA;
     }
     
+    protected Automata[] getPatronImprime(){
+        return this.INSTRUCCION_IMPRIME;
+    }
     
     
     public static Automata[] crearArrayAutomata(Automata[] automata){

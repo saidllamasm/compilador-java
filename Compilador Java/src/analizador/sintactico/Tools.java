@@ -83,7 +83,6 @@ public class Tools {
                 break;
         }
         
-            
         return new_renglon;
     }
     
@@ -105,10 +104,10 @@ public class Tools {
             }
         }
         if(correct){
-            String pattern = "[^\\D+]|[\\*\\.\\;\\+\\-\\_\\<\\>]";
-            Pattern pat = Pattern.compile(pattern);
+            String pattern = "^[a-zA-Z]+$";
+            Pattern pat = Pattern.compile(pattern, Pattern.DOTALL);
             Matcher mat = pat.matcher(var);
-            correct = !mat.find();
+            correct = mat.find();
         }
         return correct;
     }

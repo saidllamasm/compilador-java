@@ -121,8 +121,10 @@ public class CompiladorAnalizador {
             }
             
         } else if(instruccion.split(" ")[0].equals("imprime")){
-            System.out.println("detectado imprime como inicio de instruccion. no HAGO NADA");
-            isCorrect = true;
+            String[] lexemas = instruccion.split(" ");
+            for(int i = 0; i < lexemas.length; i++){
+                
+            }
         } 
         else if(instruccion.split(" ")[0].equals("lea")){
             //System.out.println("detectado lea como inicio de instruccion. no HAGO NADA");
