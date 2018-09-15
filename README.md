@@ -22,7 +22,7 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 |||`crea entero vara = varb + 2 + 34 + varc`|
 |lea|Su función leer de teclado un valor y asignarlo a una variable ya declarada| `lea <variable>`
 |||`lea var` 
-|imprime|Su función es imprimir en consola algún valor o variable.| `imprime <variable>`
+|imprime|Su función es imprimir en consola algún valor o variable. **Nota:**Para concatenar se utiliza el simbolo **.** | `imprime <var>`
 |||`imprime "Hola_este_lenguaje_es_genial!"`|
 |||`imprime "Hola_este_lenguaje_es_genial!" . "_estoy_concatenando"`|
 |||`imprime vara . varb`|
