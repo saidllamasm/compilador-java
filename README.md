@@ -24,6 +24,8 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 |||`lea var` 
 |imprime|Su función es imprimir en consola algún valor o variable.| `imprime <variable>`
 |||`imprime "Hola_este_lenguaje_es_genial!"`|
+|||`imprime "Hola_este_lenguaje_es_genial!" . "_estoy_concatenando"`|
+|||`imprime vara . varb`|
 |asigna|Su función es darle valor a las variables ya declaradas| `asigna <variable> = 20`
 |||`asigna <variable> = 20 + 234 -343`|
 |||`asigna <variable> = "Hola_JASCI"`|
