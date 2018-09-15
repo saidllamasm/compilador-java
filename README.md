@@ -34,6 +34,7 @@ Entiendase como `<var>` un nombre de variable, `<val>` como un valor, que bien p
 
 # Tipos de datos validos
 Entiendase como `<var>` un nombre de variable y `<val>` un valor, que bien puede ser númerico, booleano o de cadena.
+
 |      Tipo          |Descripción          |Ejemplo                         |
 |-|-|-|
 |entero|Recibe números enteros que van desde el-32768 al 32767.|`crea entero <var>`
