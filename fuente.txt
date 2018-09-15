@@ -1,0 +1,8 @@
+crea entero vara
+crea entero varb
+crea entero varc
+crea booleano vard
+crea booleano vara
+crea cadena vare
+crea cadena vard
+crea cadena varc
