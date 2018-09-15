@@ -64,6 +64,7 @@ public class Automatas {
         });
         
         INSTRUCCION_IMPRIME[1].setId(new String[]{"<var>","<val>"});
+        INSTRUCCION_IMPRIME[1].setIsAccepted(true);
         INSTRUCCION_IMPRIME[1].setAddress(new Automata[]{
             INSTRUCCION_IMPRIME[2]
         });

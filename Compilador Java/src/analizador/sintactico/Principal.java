@@ -31,8 +31,11 @@ public class Principal {
     
     
     public static void main(String[] args)  throws IOException {
-        /*Tools t = new Tools();
-        System.out.println(t.isCorrectNameVariable("booleano"));*/
+        //Tools t = new Tools();
+        //System.out.println(t.isCorrectNameVariable("booleano"));
+        //System.out.println(t.isCorrectFormatString("\"bo\""));
+        //System.out.println(t.isCorrectFormatString("\"b___SS__So\""));
+        
         correr();
         
     }    
@@ -51,7 +54,7 @@ public class Principal {
         System.out.println("---");*/
         String renglon = "";
         int n_renglon = 1;
-        for(int i = 0;i < content.length(); i++){
+        for(int i = 0; i < content.length(); i++){
             while(content.charAt(i) != '\n'){
                 renglon += content.charAt(i) ;
                 i++;
@@ -68,6 +71,10 @@ public class Principal {
             n_renglon++;
                 
         }
+        
+        System.out.println("---");
+        System.out.println("");
+        
         Vector <Simbolo> vector = analizador.getVars();
         System.out.println("Nombre | ID  | Tipo | Valor | Lectura");
         for(int i = 0; i < vector.size(); i++){

@@ -131,9 +131,16 @@ public class Tools {
     }
     
     // validacion de una cadena de forma correcta
-    //ejmp: "hola...adios" ;
+    //ejmp: "hola_adios" ;
     public static boolean isCorrectFormatString(String value){
-        if(value.charAt(0) == '"' && value.charAt(value.length()-1) == '"' )
+        boolean correct = true;
+        for(int i = 0; i < value.length(); i++){
+            if(value.charAt(i) == ' '){
+                correct = false;
+                break;
+            }
+        }
+        if(value.charAt(0) == '"' && value.charAt(value.length()-1) == '"' && correct )
             return true;
         else 
             return false;
