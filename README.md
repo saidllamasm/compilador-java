@@ -11,7 +11,8 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 -  El nombre de una variable no puede ser una palabra reservada.
 
 # Palabras reservadas
-Entiendase como `<var>` un nombre de variable y `<val>` un valor, que bien puede ser númerico, booleano o de cadena
+Entiendase como `<var>` un nombre de variable, `<val>` como un valor, que bien puede ser númerico, booleano o de cadena y `<tipo>` como el tipo de dato que se va a definir esa variable.
+
 |Palabra|Descripción| Ejemplo
 |-|-|-|
 |crea|Su función es reservar espacios de memoria, dicho de otra manera, definir variables.| `crea <tipo> <variable>`
@@ -32,6 +33,7 @@ Entiendase como `<var>` un nombre de variable y `<val>` un valor, que bien puede
 |||`asigna <variable> = verdadero`|
 
 # Tipos de datos validos
+Entiendase como `<var>` un nombre de variable y `<val>` un valor, que bien puede ser númerico, booleano o de cadena.
 |      Tipo          |Descripción          |Ejemplo                         |
 |-|-|-|
 |entero|Recibe números enteros que van desde el-32768 al 32767.|`crea entero <var>`
