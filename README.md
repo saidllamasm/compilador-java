@@ -28,10 +28,9 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 |||`asigna <variable> = 20 + 234 -343`|
 |||`asigna <variable> = "Hola_JASCI"`|
 |||`asigna <variable> = verdadero`|
-|
 
 # Tipos de datos validos
-|      Palabra          |Descripción          |Ejemplo                         |
+|      Tipo          |Descripción          |Ejemplo                         |
 |-|-|-|
 |entero|Recibe números enteros que van desde el-32768 al 32767.|`crea entero <var>`
 ||| `crea entero var = 2`
@@ -44,7 +43,7 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 |cadena|Recibe cualquier carácter o caracteres. **Importante**: Los espacios en blanco deben ser sustituidos por guion bajo '**_**'|`crea cadena <var>`
 |||`crea cadena var = “Hola_JASCI”`
 ||| `crea cadena var = “Hola_esta_es_cadena”`
-|
+
 # Referencias
 
  - [Compilers: Principles, Techniques, and Tools](https://github.com/germanoa/compiladores/blob/master/doc/ebook/Compiladores%20Principios%2C%20Tecnicas%20e%20Ferramentas%20-%20Alfred%20V.%20Aho.pdf)
