@@ -50,6 +50,34 @@ Entiéndase como `<variable>` un nombre de variable y `<val>` un valor, que bien
 |||`crea cadena var = “Hola_JASCI”`
 ||| `crea cadena var = “Hola_esta_es_cadena”`
 
+
+
+
+# Ejemplos de código fuente
+
+El siguiente fragmento de código es una muestra de como se pueden definir variables, definir y asignar un valor en un mismo renglón, muestra también las dos formas de agregar comentarios, impresiones de variables asi como de concatenación con alguna otra variable o un valor directo, por ultimo muestra como se puede leer desde teclado un valor y almacenarlo en una variable. 
+
+    `crea entero varA
+    crea cadena saludo = "Hola_mundo_JASCI!"
+    crea booleano cond = verdadero
+    
+    /*
+	    Comentario de 
+	    más de una linea
+    /
+    
+    imprime saludo . 2332 . "puedo_concatenar_cadenas"
+    imprime 223 . "_es_tu_resultado"
+    imprime "Hola_JASCI"
+    imprime varA
+    
+    // comentario de una sola linea
+
+    lea varA
+    
+    crea cadena despedida = "Gracias_por_usarme"`
+
+
 # Referencias
 
  - [Compilers: Principles, Techniques, and Tools](https://github.com/germanoa/compiladores/blob/master/doc/ebook/Compiladores%20Principios%2C%20Tecnicas%20e%20Ferramentas%20-%20Alfred%20V.%20Aho.pdf)
