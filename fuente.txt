@@ -1,8 +1,17 @@
-crea entero vara
-crea entero varb
-crea entero varc
-crea booleano vard
-crea booleano vara
-crea cadena vare
-crea cadena vard
-crea cadena varc
+crea entero sad
+imprime sad . 2332 . "puedo_concatenar_cadenas"
+imprime 223
+imprime "Hola_JASCI"
+
+imprime var
+
+// probando mi cf
+lea sad
+
+crea test 
+
+crea booleano bol = verdadero
+
+/*
+Comentarios
+/

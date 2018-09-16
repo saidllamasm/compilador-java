@@ -122,9 +122,45 @@ public class CompiladorAnalizador {
             
         } else if(instruccion.split(" ")[0].equals("imprime")){
             String[] lexemas = instruccion.split(" ");
-            for(int i = 0; i < lexemas.length; i++){
-                
+            if(lexemas.length >= 2){
+                for(int i = 1; i < lexemas.length; i++){
+                    if( i%2 == 0){
+                        if(!lexemas[i].equals(".") || (i+1) == lexemas.length){
+                            System.out.println(CustomColors.RED+lexemas[i]+" "+msj.ERROR_STATEMENT+" CE3320");
+                            isCorrect = false;
+                            break;
+                        }
+                    } else{
+                        // debe ser valor o variable
+                        if(herramientas.isCorrectFormatNumber(lexemas[i]) || herramientas.isCorrectFormatString(lexemas[i]) || herramientas.isCorrectNameVariable(lexemas[i])){
+                            if(herramientas.isCorrectNameVariable(lexemas[i])){
+                                String[] res =  variablesDeclaradas.isRegisterVariable(lexemas[i]);
+                                if(res[0].equals("verdadero")){
+                                    isCorrect = true;
+                                }else{
+                                    System.out.println(CustomColors.RED+lexemas[i]+" "+msj.ERROR_VARIABLE_NOT_DECLARE+" CE3304");
+                                    isCorrect = false;
+                                    break;
+                                }
+                            }
+                            if(herramientas.isCorrectFormatNumber(lexemas[i]) || herramientas.isCorrectFormatString(lexemas[i])){
+                                isCorrect = true;
+                            }
+                            
+                        }else{
+                            System.out.println(CustomColors.RED+lexemas[i]+" "+msj.ERROR_STATEMENT+" CE3320");
+                            isCorrect = false;
+                            break;
+                        }
+                    }
+                }   
+            }else{
+                System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE1049");
             }
+            if(isCorrect){
+                System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
+            }
+            
         } 
         else if(instruccion.split(" ")[0].equals("lea")){
             //System.out.println("detectado lea como inicio de instruccion. no HAGO NADA");
@@ -145,15 +181,7 @@ public class CompiladorAnalizador {
              System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE001");
         }
      
-        /*System.out.println(CustomColors.YELLOW_BOLD+"Tabla de simbolos");
-        variablesDeclaradas.viewAllVarsDefined();*/
         /*
-        String test = "crea entero v = \"ssddsds_____sdsds\" ";
-        
-        for(String t : test.split(" ")){
-            System.out.println(herramientas.isCorrectFormatString(t));    
-        }
-        
         String testt = "\"hola___mundooo_\"";
         System.out.println(herramientas.printString(herramientas.cleanVarString(testt)));
         */
