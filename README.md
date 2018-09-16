@@ -1,8 +1,9 @@
 # Bienvenido a JASCI!
 
-¡Hola! Llegaste a mi compilador realizado en Java y ASM para la materia de Lenguajes y Autómatas 1 y 2. El presente documento corresponde a la documentación del lenguaje JASCI, lenguaje compilado basándome en el lenguaje de programación Java. > **Nota:** Este repositorio es para uso educativo y no pretende remplazar algún lenguaje actual en la industria.
+¡Hola! Llegaste a mi compilador realizado en Java y ASM para la materia de Lenguajes y Autómatas 1 y 2. El presente documento corresponde a la documentación del lenguaje JASCI, lenguaje compilado basándome en el lenguaje de programación Java.
+> **Nota:** Este repositorio es para uso educativo y no pretende remplazar algún lenguaje actual en la industria.
 
-# Reglas para nombres de variables
+# Reglas para nombrar variables
 Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 -  El nombre debe contener únicamente carácteres del tipo letra ASCII (en mayúsculas o minúsculas)
 -  No se aceptan números, caracteres de subrayado ni caracteres especiales.
