@@ -5,13 +5,13 @@
 
 # Reglas para nombrar variables
 Al momento de declarar variables se deberá tener en cuenta lo siguiente:
--  El nombre debe contener únicamente carácteres del tipo letra ASCII (en mayúsculas o minúsculas)
+-  El nombre debe contener únicamente caracteres del tipo letra ASCII (en mayúsculas y/o minúsculas)
 -  No se aceptan números, caracteres de subrayado ni caracteres especiales.
 -  No debe contener espacios.
 -  El nombre de una variable no puede ser una palabra reservada.
 
 # Palabras reservadas
-Entiéndase como `<variable>` un nombre de variable, `<val>` como un valor, que bien puede ser númerico, booleano o de cadena y `<tipo>` como el tipo de dato que se va a definir esa variable.
+Entiéndase como `<variable>` un nombre de variable, `<val>` como un valor, que bien puede ser numérico, booleano o de cadena y `<tipo>` como el tipo de dato que se va a definir esa variable.
 
 |Palabra|Descripción| Ejemplo
 |-|-|-|
@@ -23,7 +23,7 @@ Entiéndase como `<variable>` un nombre de variable, `<val>` como un valor, que 
 |||`crea entero vara = varb + 2 + 34 + varc`|
 |lea|Su función leer de teclado un valor y asignarlo a una variable ya declarada| `lea <variable>`
 |||`lea var` 
-|imprime|Su función es imprimir en consola algún valor o variable. **Nota**: Para concatenar se utiliza el simbolo . | `imprime <variable>`
+|imprime|Su función es imprimir en consola algún valor o variable. **Nota**: Para concatenar se utiliza el símbolo . | `imprime <variable>`
 |||`imprime <val>`|
 |||`imprime "Hola_este_lenguaje_es_genial!"`|
 |||`imprime "Hola_este_lenguaje_es_genial!" . "_estoy_concatenando"`|
@@ -34,7 +34,7 @@ Entiéndase como `<variable>` un nombre de variable, `<val>` como un valor, que 
 |||`asigna <variable> = verdadero`|
 
 # Tipos de datos validos
-Entiéndase como `<variable>` un nombre de variable y `<val>` un valor, que bien puede ser númerico, booleano o de cadena.
+Entiéndase como `<variable>` un nombre de variable y `<val>` un valor, que bien puede ser numérico, booleano o de cadena.
 
 |      Tipo          |Descripción          |Ejemplo                         |
 |-|-|-|
