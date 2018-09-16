@@ -1,7 +1,6 @@
 # Bienvenido a JASCI!
 
-Hola! Llegaste a mi compilador realizado en Java y ASM para la materia de Lenguajes y Automatas 1 y 2. 
-> **Nota:** Este repositorio es para uso educativo y no pretende remplazar algún lenguaje actual en la industria.
+¡Hola! Llegaste a mi compilador realizado en Java y ASM para la materia de Lenguajes y Autómatas 1 y 2. El presente documento corresponde a la documentación del lenguaje JASCI, lenguaje compilado basándome en el lenguaje de programación Java. > **Nota:** Este repositorio es para uso educativo y no pretende remplazar algún lenguaje actual en la industria.
 
 # Reglas para nombres de variables
 Al momento de declarar variables se deberá tener en cuenta lo siguiente:
@@ -11,19 +10,20 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 -  El nombre de una variable no puede ser una palabra reservada.
 
 # Palabras reservadas
-Entiendase como `<var>` un nombre de variable, `<val>` como un valor, que bien puede ser númerico, booleano o de cadena y `<tipo>` como el tipo de dato que se va a definir esa variable.
+Entiéndase como `<variable>` un nombre de variable, `<val>` como un valor, que bien puede ser númerico, booleano o de cadena y `<tipo>` como el tipo de dato que se va a definir esa variable.
 
 |Palabra|Descripción| Ejemplo
 |-|-|-|
 |crea|Su función es reservar espacios de memoria, dicho de otra manera, definir variables.| `crea <tipo> <variable>`
-|||`crea entero <var>`|
-|||`crea booleano <var>`|
-|||`crea cadena <var>`|
-|||`crea entero <var> = <var> + <val> + <val> + <var>`|
+|||`crea entero <variable>`|
+|||`crea booleano <variable>`|
+|||`crea cadena <variable>`|
+|||`crea entero <variable> = <variable> + <val> + <val> + <variable>`|
 |||`crea entero vara = varb + 2 + 34 + varc`|
 |lea|Su función leer de teclado un valor y asignarlo a una variable ya declarada| `lea <variable>`
 |||`lea var` 
-|imprime|Su función es imprimir en consola algún valor o variable. **Nota**: Para concatenar se utiliza el simbolo . | `imprime <var>`
+|imprime|Su función es imprimir en consola algún valor o variable. **Nota**: Para concatenar se utiliza el simbolo . | `imprime <variable>`
+|||`imprime <val>`|
 |||`imprime "Hola_este_lenguaje_es_genial!"`|
 |||`imprime "Hola_este_lenguaje_es_genial!" . "_estoy_concatenando"`|
 |||`imprime vara . varb`|
@@ -33,19 +33,19 @@ Entiendase como `<var>` un nombre de variable, `<val>` como un valor, que bien p
 |||`asigna <variable> = verdadero`|
 
 # Tipos de datos validos
-Entiendase como `<var>` un nombre de variable y `<val>` un valor, que bien puede ser númerico, booleano o de cadena
+Entiéndase como `<variable>` un nombre de variable y `<val>` un valor, que bien puede ser númerico, booleano o de cadena.
 
 |      Tipo          |Descripción          |Ejemplo                         |
 |-|-|-|
-|entero|Recibe números enteros que van desde el-32768 al 32767.|`crea entero <var>`
+|entero|Recibe números enteros que van desde el-32768 al 32767.|`crea entero <variable>`
 ||| `crea entero var = 2`
 ||| `crea entero var = 2 + 200 `|
 ||| `crea entero <var> = <var> + <val> `|
 ||| `crea entero var = varb + 33 `|
-|booleano|Recibe dos valores: verdadero ó falso|`crea booleano <var>`
+|booleano|Recibe dos valores: verdadero ó falso|`crea booleano <variable>`
 ||| `crea booleano var = verdadero`
 ||| `crea booleano var = falso`
-|cadena|Recibe cualquier carácter o caracteres. **Importante**: Los espacios en blanco deben ser sustituidos por guion bajo '**_**'|`crea cadena <var>`
+|cadena|Recibe cualquier carácter o caracteres. **Importante**: Los espacios en blanco deben ser sustituidos por guion bajo '**_**'|`crea cadena <variable>`
 |||`crea cadena var = “Hola_JASCI”`
 ||| `crea cadena var = “Hola_esta_es_cadena”`
 
