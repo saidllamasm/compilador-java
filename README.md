@@ -57,7 +57,7 @@ Entiéndase como `<variable>` un nombre de variable y `<val>` un valor, que bien
 
 El siguiente fragmento de código es una muestra de como se pueden definir variables, definir y asignar un valor en un mismo renglón, muestra también las dos formas de agregar comentarios, impresiones de variables asi como de concatenación con alguna otra variable o un valor directo, por ultimo muestra como se puede leer desde teclado un valor y almacenarlo en una variable. 
 
-    `crea entero varA
+    crea entero varA
     crea cadena saludo = "Hola_mundo_JASCI!"
     crea booleano cond = verdadero
     
@@ -75,7 +75,7 @@ El siguiente fragmento de código es una muestra de como se pueden definir varia
 
     lea varA
     
-    crea cadena despedida = "Gracias_por_usarme"`
+    crea cadena despedida = "Gracias_por_usarme"
 
 
 # Referencias
