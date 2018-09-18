@@ -10,6 +10,17 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 -  No debe contener espacios.
 -  El nombre de una variable no puede ser una palabra reservada.
 
+
+
+
+#  Documentación de código
+
+En JASCI se pueden incluir comentarios de dos maneras diferentes:
+
+ - `/* comentario de una o más lineas  /`
+
+ - `// cometario de una sola linea`
+ 
 # Palabras reservadas
 Entiéndase como `<variable>` un nombre de variable, `<val>` como un valor, que bien puede ser numérico, booleano o de cadena y `<tipo>` como el tipo de dato que se va a definir esa variable.
 
