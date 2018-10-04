@@ -71,6 +71,22 @@ Entiéndase como `<variable>` un nombre de variable y `<val>` un valor, que bien
 |||`crea cadena var = “Hola_JASCI”`
 ||| `crea cadena var = “Hola_esta_es_cadena”`
 
+# Operadores relacionales aceptados
+A continuación se muestran todos los simbolos aceptados dentro de las condiciones, aplica para ciclos y comparacion.
+
+|      Símbolo          |Descripción          |Ejemplo                         |
+|-|-|-|
+|<|Menor que.|`varA < varB`
+|||`varA < 10`
+|>|Mayor que.|`varA > varB`
+|||`varA > 101`
+|==|Idéntico que.|`varA == varB`
+|||`varA == 5`
+|!<|No igual que.|`varA != varB`
+|||`varA != 15`
+|`||`|O|`varA != varB || varB == 3`
+|&&|Y|`varA != varB && varE < 0`
+
 # Ejemplos de código fuente
 
 El siguiente fragmento de código es una muestra de como se pueden definir variables, definir y asignar un valor en un mismo renglón, muestra también las dos formas de agregar comentarios, impresiones de variables asi como de concatenación con alguna otra variable o un valor directo, por ultimo muestra como se puede leer desde teclado un valor y almacenarlo en una variable. 
