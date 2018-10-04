@@ -112,6 +112,18 @@ public class Tools {
         return correct;
     }
     
+    // validacion de simbolos relacoionales
+    public static boolean isSymbolRelation(String symbol){
+        boolean flag = false;
+        for(String single_symbol : logs.SYMBOLS_RELATION){
+            if(single_symbol.equals(symbol)){
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+    
     // validacion de numeros, que no contenga caracteres
     public static boolean isCorrectFormatNumber(String number){
         boolean flag = true;

@@ -10,9 +10,6 @@ Al momento de declarar variables se deberá tener en cuenta lo siguiente:
 -  No debe contener espacios.
 -  El nombre de una variable no puede ser una palabra reservada.
 
-
-
-
 #  Documentación de código
 
 En JASCI se pueden incluir comentarios de dos maneras diferentes:
@@ -24,6 +21,7 @@ En JASCI se pueden incluir comentarios de dos maneras diferentes:
 # Palabras reservadas
 Entiéndase como `<variable>` un nombre de variable, `<val>` como un valor, que bien puede ser numérico, booleano o de cadena y `<tipo>` como el tipo de dato que se va a definir esa variable.
 
+
 |Palabra|Descripción| Ejemplo
 |-|-|-|
 |crea|Su función es reservar espacios de memoria, dicho de otra manera, definir variables.| `crea <tipo> <variable>`
@@ -33,7 +31,7 @@ Entiéndase como `<variable>` un nombre de variable, `<val>` como un valor, que 
 |||`crea entero <variable> = <variable> + <val> + <val> + <variable>`|
 |||`crea entero vara = varb + 2 + 34 + varc`|
 |lea|Su función leer de teclado un valor y asignarlo a una variable ya declarada| `lea <variable>`
-|||`lea var` 
+|||`lea var`
 |imprime|Su función es imprimir en consola algún valor o variable. **Nota**: Para concatenar se utiliza el símbolo . | `imprime <variable>`
 |||`imprime <val>`|
 |||`imprime "Hola_este_lenguaje_es_genial!"`|
@@ -43,6 +41,18 @@ Entiéndase como `<variable>` un nombre de variable, `<val>` como un valor, que 
 |||`asigna <variable> = 20 + 234 -343`|
 |||`asigna <variable> = "Hola_JASCI"`|
 |||`asigna <variable> = verdadero`|
+|ciclo|Realiza iteraciones siempre y cuando se cumpla la condición o condiciones que se determinen como parámetros. Se puede agregar mas de una condición utilizando los símbolos  y &&. Los operadores relacionados aceptados son: < Menor que, > Mayor que, == Igual, != No igual que.|`ciclo ( <variable> )`|
+|||`ciclo ( <variable> == <val> || <variable> == <val> &&  <variable> == <val>  )`|
+|||`ciclo ( <variable > &&  < variable > == <val>  )`|
+|||`ciclo ( varA )`|
+|||`ciclo ( varA == 10 && varB < 5 )`|
+|||`ciclo ( varA != 10 )`|
+|compara_si|Evalúa la condición o las condiciones y de cumplir ejecuta una vez el código siguiente. Se puede agregar mas de una condición utilizando los símbolos y &&. Los operadores relacionados aceptados son: < Menor que, > Mayor que, == Igual, != No igual que.|`compara_si ( <variable> )`|
+|||`compara_si ( <variable> == <val> || <variable> == <val> &&  <variable> == <val>  )`|
+|||`compara_si ( <variable > &&  < variable > == <val>  )`|
+|||`compara_si ( varA )`|
+|||`compara_si ( varA == 10 && varB < 5 )`|
+|||`compara_si ( varA != 10 )`|
 
 # Tipos de datos validos
 Entiéndase como `<variable>` un nombre de variable y `<val>` un valor, que bien puede ser numérico, booleano o de cadena.
@@ -60,9 +70,6 @@ Entiéndase como `<variable>` un nombre de variable y `<val>` un valor, que bien
 |cadena|Recibe cualquier carácter o caracteres. **Importante**: Los espacios en blanco deben ser sustituidos por guion bajo '**_**'|`crea cadena <variable>`
 |||`crea cadena var = “Hola_JASCI”`
 ||| `crea cadena var = “Hola_esta_es_cadena”`
-
-
-
 
 # Ejemplos de código fuente
 
@@ -87,7 +94,6 @@ El siguiente fragmento de código es una muestra de como se pueden definir varia
     lea varA
     
     crea cadena despedida = "Gracias_por_usarme"
-
 
 # Referencias
 

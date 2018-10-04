@@ -37,4 +37,13 @@ public class Logs {
         "booleano",
     };
     
+    // Operadores relacionales
+    protected final String[] SYMBOLS_RELATION = new String[]{
+        "<",
+        ">",
+        "&&",
+        "||",
+        "=="
+    };
+    
 }

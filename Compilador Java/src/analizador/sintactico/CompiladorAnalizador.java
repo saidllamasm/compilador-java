@@ -147,7 +147,7 @@ public class CompiladorAnalizador {
                                 isCorrect = true;
                             }
                             
-                        }else{
+                        } else {
                             System.out.println(CustomColors.RED+lexemas[i]+" "+msj.ERROR_STATEMENT+" CE3320");
                             isCorrect = false;
                             break;
@@ -180,17 +180,168 @@ public class CompiladorAnalizador {
         } else if(instruccion.split(" ")[0].equals("ciclo")){
             //System.out.println("detectado lea como inicio de instruccion. no HAGO NADA");
             String[] lexemas = instruccion.split(" ");
-            isCorrect = automata.analizarRenglon(lexemas,  automatas.getPatronCiclo());
-            System.out.println(CustomColors.BLUE+"Ciclo "+isCorrect);
+            if(lexemas.length < 3){
+                isCorrect = false;
+                System.out.println(CustomColors.BLUE+"Error en numero de lexemas");   
+            }else{
+                String log_tmp = "";
+                for(int i = 2; i < lexemas.length; i++){
+                    if(!herramientas.isSymbolRelation(lexemas[i])){  
+                        if(herramientas.isCorrectFormatNumber(lexemas[i]) || herramientas.isCorrectFormatBoolean(lexemas[i])){
+                            lexemas[i]="<val>";   
+                        } else if(herramientas.isCorrectNameVariable(lexemas[i])){
+                            String[] res =  variablesDeclaradas.isRegisterVariable(lexemas[i]);
+                            if(res[0].equals("verdadero")){ // es variable
+                                if(herramientas.isSymbolRelation(lexemas[i+1]) ){
+                                    boolean isBool = false;
+                                    boolean isNumber = false;
+                                    if(herramientas.isCorrectFormatNumber(lexemas[i+2]))
+                                        isNumber = true;
+                                    else if(herramientas.isCorrectFormatBoolean(lexemas[i+2]))
+                                        isBool = true;
+                                    
+                                    if(isBool){
+                                        if(!res[1].equals("booleano")){
+                                            log_tmp=lexemas[i]+" "+msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                            break;
+                                        } else{
+                                            lexemas[i]="<var>";
+                                        }
+                                    }else if (isNumber){
+                                        if(!res[1].equals("entero")){
+                                            log_tmp=lexemas[i]+" "+msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                            break;
+                                        }else{
+                                            lexemas[i]="<var>";
+                                        }
+                                    }
+                                    
+                                }
+                                
+                            } else{
+                                log_tmp = lexemas[i] +" "+msj.ERROR_VARIABLE_NOT_DECLARE;
+                                break;
+                            }
+                            
+                        } else {
+                            if( lexemas[i].equals(")")){
+                                String[] res =  variablesDeclaradas.isRegisterVariable(lexemas[i-1]);
+                                if(res[0].equals("verdadero")){
+                                    if(res[1].equals("booleano")){
+                                        lexemas[i-1] = "<var>";
+                                    }else{
+                                        log_tmp=lexemas[i-1]+" "+msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                    }
+                                    
+                                } else{
+                                    log_tmp = lexemas[i-1] +" "+msj.ERROR_VARIABLE_NOT_DECLARE;
+                                } 
+                                break;
+                            }
+                            log_tmp =  lexemas[i]+" "+msj.ERROR_VARIABLE_TYPE_NOT_DATATYPE;
+                            break;
+                        }
+                        
+                    }
+                }
+                /*for(int i = 0; i < lexemas.length; i++){
+                    System.out.print(CustomColors.BLUE+lexemas[i]+" ");   
+                }*/
+                isCorrect = automata.analizarRenglon(lexemas,  automatas.getPatronCiclo());
+                
+                if ( isCorrect ){
+                    // en teoria va bien, ahora hay que analizar que las variables esten registradas y que correspondan al tipo de dato con el que se compara
+                    System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
+                } else{
+                    System.out.println(CustomColors.RED+bk_instruccion+" "+log_tmp);
+                }
+                
+                
+            }
             
         } else if(instruccion.split(" ")[0].equals("compara_si")){
             //System.out.println("detectado lea como inicio de instruccion. no HAGO NADA");
             String[] lexemas = instruccion.split(" ");
-            isCorrect = automata.analizarRenglon(lexemas,  automatas.getPatronCondicion());
-            System.out.println(CustomColors.BLUE+"Condición "+isCorrect);
+            if(lexemas.length < 3){
+                isCorrect = false;
+                System.out.println(CustomColors.BLUE+"Error en numero de lexemas");   
+            }else{
+                String log_tmp = "";
+                for(int i = 2; i < lexemas.length; i++){
+                    if(!herramientas.isSymbolRelation(lexemas[i])){  
+                        if(herramientas.isCorrectFormatNumber(lexemas[i]) || herramientas.isCorrectFormatBoolean(lexemas[i])){
+                            lexemas[i]="<val>";   
+                        } else if(herramientas.isCorrectNameVariable(lexemas[i])){
+                            String[] res =  variablesDeclaradas.isRegisterVariable(lexemas[i]);
+                            if(res[0].equals("verdadero")){ // es variable
+                                if(herramientas.isSymbolRelation(lexemas[i+1]) ){
+                                    boolean isBool = false;
+                                    boolean isNumber = false;
+                                    if(herramientas.isCorrectFormatNumber(lexemas[i+2]))
+                                        isNumber = true;
+                                    else if(herramientas.isCorrectFormatBoolean(lexemas[i+2]))
+                                        isBool = true;
+                                    
+                                    if(isBool){
+                                        if(!res[1].equals("booleano")){
+                                            log_tmp=lexemas[i]+" "+msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                            break;
+                                        } else{
+                                            lexemas[i]="<var>";
+                                        }
+                                    }else if (isNumber){
+                                        if(!res[1].equals("entero")){
+                                            log_tmp=lexemas[i]+" "+msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                            break;
+                                        }else{
+                                            lexemas[i]="<var>";
+                                        }
+                                    }
+                                    
+                                }
+                                
+                            } else{
+                                log_tmp = lexemas[i] +" "+msj.ERROR_VARIABLE_NOT_DECLARE;
+                                break;
+                            }
+                            
+                        } else {
+                            if( lexemas[i].equals(")")){
+                                String[] res =  variablesDeclaradas.isRegisterVariable(lexemas[i-1]);
+                                if(res[0].equals("verdadero")){
+                                    if(res[1].equals("booleano")){
+                                        lexemas[i-1] = "<var>";
+                                    }else{
+                                        log_tmp=lexemas[i-1]+" "+msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                    }
+                                    
+                                } else{
+                                    log_tmp = lexemas[i-1] +" "+msj.ERROR_VARIABLE_NOT_DECLARE;
+                                } 
+                                break;
+                            }
+                            log_tmp =  lexemas[i]+" "+msj.ERROR_VARIABLE_TYPE_NOT_DATATYPE;
+                            break;
+                        }
+                        
+                    }
+                }
+                /*for(int i = 0; i < lexemas.length; i++){
+                    System.out.print(CustomColors.BLUE+lexemas[i]+" ");   
+                }*/
+                isCorrect = automata.analizarRenglon(lexemas,  automatas.getPatronCondicion());
+                
+                if ( isCorrect ){
+                    // en teoria va bien, ahora hay que analizar que las variables esten registradas y que correspondan al tipo de dato con el que se compara
+                    System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
+                } else{
+                    System.out.println(CustomColors.RED+bk_instruccion+" "+log_tmp);
+                }
+                
+            }
             
         } else {
-             System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE001");
+            System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE001");
         }
      
         /*
