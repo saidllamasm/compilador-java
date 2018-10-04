@@ -177,6 +177,18 @@ public class CompiladorAnalizador {
             }else{
                 System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE1022");
             }
+        } else if(instruccion.split(" ")[0].equals("ciclo")){
+            //System.out.println("detectado lea como inicio de instruccion. no HAGO NADA");
+            String[] lexemas = instruccion.split(" ");
+            isCorrect = automata.analizarRenglon(lexemas,  automatas.getPatronCiclo());
+            System.out.println(CustomColors.BLUE+"Ciclo "+isCorrect);
+            
+        } else if(instruccion.split(" ")[0].equals("compara_si")){
+            //System.out.println("detectado lea como inicio de instruccion. no HAGO NADA");
+            String[] lexemas = instruccion.split(" ");
+            isCorrect = automata.analizarRenglon(lexemas,  automatas.getPatronCondicion());
+            System.out.println(CustomColors.BLUE+"Condición "+isCorrect);
+            
         } else {
              System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE001");
         }
