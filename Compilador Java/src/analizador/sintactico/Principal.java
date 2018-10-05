@@ -28,6 +28,9 @@ public class Principal {
     static LecturaCF archivo = new LecturaCF();
     static Depurador depurador = new Depurador();
     static CompiladorAnalizador analizador = new CompiladorAnalizador();
+    static EscrituraArchivo escritura = new EscrituraArchivo();
+    static TraductorASM asm = new TraductorASM(); 
+    static Logs msj = new Logs();
     
     
     public static void main(String[] args)  throws IOException {
@@ -41,6 +44,7 @@ public class Principal {
     }    
     
     private static void correr() throws IOException{
+        boolean success = true; // compilacion exitosa
         String rutaABS = "/users/saidllamas/desktop/";
         String extIN = ".txt", extOut = ".sllm";
         String content = archivo.leerArchivo(rutaABS+"fuente"+extIN);
@@ -63,6 +67,7 @@ public class Principal {
             if(!analizador.analizar(renglon)){
                 System.out.print(CustomColors.RED+"in row "+n_renglon);
                 System.out.println();
+                success = false;
             }
             System.out.println();
             
@@ -84,6 +89,19 @@ public class Principal {
             
         }
         
+        
+        if(success){
+            escritura.crearArchivoASM(asm.convertirASM(content, vector)); //escribir archivo lenguaje ENSAMBLADOR
+            System.out.println("");
+            System.out.println(CustomColors.GREEN+msj.SUCCESS_BUILD);
+            // el siguiente codigo comentado es para verificar que si se hayan almacenado correctamente las variables
+            // descomentar cuando se requiera visualizar que id corresponde a que nombre de variable en codigo ASM
+            /*String[][] vars =  asm.getDiccionarioASM();
+            for(int i = 0; i < vars.length; i++){
+                System.out.println(vars[i][0]);
+                System.out.println("--");
+            }*/
+        }
         for(int i = 0; i < 10; i++)
             System.out.println("");
     }

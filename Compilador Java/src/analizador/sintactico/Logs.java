@@ -16,7 +16,7 @@ public class Logs {
     protected final String ERROR_VARIABLE_NAME = "<identifier> expected";
     
     // exitos
-    protected final String SUCCESS_BUILD = "BUILD SUCCESSFUL";
+    protected final String SUCCESS_BUILD = "BUILD SUCCESSFUL -> run bin-jasci.asm";
     
     // palabras reservadas
     protected final String[] PAL_RESERV = new String[]{
@@ -28,6 +28,8 @@ public class Logs {
         "fin_compara",
         "ciclo",
         "fin_ciclo",
+        "verdadero",
+        "falso"
     };
     
     // tipos de datos
@@ -43,7 +45,8 @@ public class Logs {
         ">",
         "&&",
         "||",
-        "=="
+        "==",
+        "!="
     };
     
 }
