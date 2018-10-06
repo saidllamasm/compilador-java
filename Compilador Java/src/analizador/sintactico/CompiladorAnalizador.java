@@ -340,14 +340,72 @@ public class CompiladorAnalizador {
                 
             }
             
+        } else if(instruccion.split(" ")[0].equals("asigna")){
+            String tmp_log = "";
+            String[] lexemas = instruccion.split(" ");
+            if(lexemas.length > 3){
+                if(herramientas.isCorrectNameVariable(lexemas[1])){
+                    String[] res =  variablesDeclaradas.isRegisterVariable(lexemas[1]);
+                    if(res[0].equals("verdadero")){
+                        lexemas[1] = "<var>";
+                        String data_type = res[1];
+                        for(int i = 3; i < lexemas.length; i+=2){
+                            // revisar si las variables estan registradas y su tipo de dato
+                            String[] tmp_Res =  variablesDeclaradas.isRegisterVariable(lexemas[i]);
+                            if(tmp_Res[0].equals("verdadero")){
+                                if(data_type.equals(tmp_Res[1])){
+                                    lexemas[i] = "<var>";
+                                }else{
+                                 tmp_log = msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                break;   
+                                }
+                            }else{
+                                if(data_type.equals("booleano")){
+                                    if(herramientas.isCorrectFormatBoolean(lexemas[i])){
+                                        lexemas[i] = "<val>";
+                                    } else{
+                                        tmp_log = msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                        break;
+                                    }
+                                } else if(data_type.equals("cadena")){
+                                    if(herramientas.isCorrectFormatString(lexemas[i])){
+                                        lexemas[i] = "<val>";
+                                    } else{
+                                        tmp_log = msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                        break;
+                                    }
+                                } else if(data_type.equals("entero")){
+                                    if(herramientas.isCorrectFormatNumber(lexemas[i])){
+                                        lexemas[i] = "<val>";
+                                    } else{
+                                        tmp_log = msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE;
+                                        break;
+                                    }
+                                }
+                            }
+                            //lexemas[i] = "<var>";
+                        }
+                        
+                    } else{
+                        tmp_log = msj.ERROR_VARIABLE_NOT_DECLARE;
+                    }
+                }else{
+                    tmp_log = msj.ERROR_VARIABLE_NAME;
+                }
+            } else {
+                tmp_log = "Error, not values pased";
+            }
+            //automata.recorrerAutomata(automatas.getPatronAsignacion());
+            isCorrect = automata.analizarRenglon(lexemas, automatas.getPatronAsignacion());
+            if ( isCorrect ){
+                System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
+            } else{
+                System.out.println(CustomColors.RED+bk_instruccion+" "+tmp_log);
+            }
         } else {
             System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE001");
         }
-     
-        /*
-        String testt = "\"hola___mundooo_\"";
-        System.out.println(herramientas.printString(herramientas.cleanVarString(testt)));
-        */
+        
         return isCorrect;
            
     }

@@ -71,7 +71,7 @@ public class AnalizadorAutomatas {
    }
 
    // No realiza operacion ni es importante, lo uso para mostrar el automata que voy a validar
-   private static void recorrerAutomata(Automata[] arrayID){
+   protected static void recorrerAutomata(Automata[] arrayID){
        for(Automata automata : arrayID){
            for(String id : automata.getId()){
                 System.out.print(" "+id);   

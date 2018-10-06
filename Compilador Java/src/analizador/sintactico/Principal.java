@@ -34,10 +34,6 @@ public class Principal {
     
     
     public static void main(String[] args)  throws IOException {
-        /*Tools t = new Tools();
-        System.out.println(t.isCorrectNameVariable(""));*/
-        //System.out.println(t.isCorrectFormatString("\"bo\""));
-        //System.out.println(t.isCorrectFormatString("\"b___SS__So\""));
         
         correr();
         

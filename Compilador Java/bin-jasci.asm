@@ -3,12 +3,8 @@ pila segment para stack 'stack'
 pila ends
 datos segment para public 'data'
     id0 DB 0
-    id1 DB 0 
-    id2 DB "$"
-    id3 DB "hola jasci" $
-    id4 DB 10 
-    id5 DB 0
-    id6 DB 0 
+    id1 DB 10 
+    id2 DB "hola " $
 datos ends
 extra segment para public 'data'
 

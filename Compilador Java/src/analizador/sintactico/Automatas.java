@@ -5,6 +5,7 @@ public class Automatas {
     
     private Automata INSTRUCCION_CREA[] = new Automata[8];
     private Automata INSTRUCCION_IMPRIME[] = new Automata[3];
+    private Automata INSTRUCCION_ASIGNA[] = new Automata[5];
     private Automata INSTRUCCION_CICLO[] = new Automata[7];
     private Automata INSTRUCCION_CONDICION[] = new Automata[7];
     
@@ -74,6 +75,34 @@ public class Automatas {
         INSTRUCCION_IMPRIME[2].setId(new String[]{"."});
         INSTRUCCION_IMPRIME[2].setAddress(new Automata[]{
             INSTRUCCION_IMPRIME[1]
+        });
+        
+        // ASIGNA
+        INSTRUCCION_ASIGNA = crearArrayAutomata(INSTRUCCION_ASIGNA);
+        
+        INSTRUCCION_ASIGNA[0].setId(new String[]{"asigna"});
+        INSTRUCCION_ASIGNA[0].setAddress(new Automata[]{
+            INSTRUCCION_ASIGNA[1],
+        });
+        
+        INSTRUCCION_ASIGNA[1].setId(new String[]{"<var>"});
+        INSTRUCCION_ASIGNA[1].setAddress(new Automata[]{
+            INSTRUCCION_ASIGNA[2],
+        });
+        
+        INSTRUCCION_ASIGNA[2].setId(new String[]{"="});
+        INSTRUCCION_ASIGNA[2].setAddress(new Automata[]{
+            INSTRUCCION_ASIGNA[3],
+        });
+        
+        INSTRUCCION_ASIGNA[3].setId(new String[]{"<var>", "<val>"});
+        INSTRUCCION_ASIGNA[3].setIsAccepted(true);
+        INSTRUCCION_ASIGNA[3].setAddress(new Automata[]{
+            INSTRUCCION_ASIGNA[4],
+        });
+        INSTRUCCION_ASIGNA[4].setId(new String[]{"+","-"});
+        INSTRUCCION_ASIGNA[4].setAddress(new Automata[]{
+            INSTRUCCION_ASIGNA[3],
         });
         
         // ciclo
@@ -162,6 +191,10 @@ public class Automatas {
             INSTRUCCION_CONDICION[2],
         });
         
+    }
+    
+    protected Automata[] getPatronAsignacion(){
+        return this.INSTRUCCION_ASIGNA;
     }
     
     protected Automata[] getPatronCondicion(){
