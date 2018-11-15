@@ -2,10 +2,14 @@
 pila segment para stack 'stack'
 pila ends
 datos segment para public 'data'
-    id0 DB 0
-tmp0 DB "hola" , 10, 13, 24H
-tmp1 DB "fuera del ciclo" , 10, 13, 24H
-tmp2 DB "estoy en otro ciclo" , 10, 13, 24H
+id0 DB 61, ?, 61 DUP( ? )  ; variable de lectura
+    id1 DB 0 
+tmp0 DB "Hola ingresa una cadena" , 10, 13, 24H
+tmp1 DB "ingresaste la cadena" , 10, 13, 24H
+tmp2 DB "inicia el ciclo" , 10, 13, 24H
+tmp3 DB "." , 10, 13, 24H
+tmp4 DB "otro ciclo" , 10, 13, 24H
+tmp5 DB "a es menor que dos" , 10, 13, 24H
 datos ends
 extra segment para public 'data'
 extra ends
@@ -32,30 +36,54 @@ codigo segment para public 'code'
  MOV DL, 79
  INT 10H
  ; Termina limpiar pantalla
- ; inicia ciclo 
- MOV CX,4 
- C0: 
 ; Impresion de cadena
 LEA DX, tmp0
 MOV AH,09
 INT 21H
- loop C0 
- ; fin ciclo 
+; inicia lectura de cadena
+       lea  bx, id0
+	push 	bx 
+	call	leercad 
+	add 	sp, 2
+       call	slinea
+       ; fin lectura
 ; Impresion de cadena
 LEA DX, tmp1
 MOV AH,09
 INT 21H
- ; inicia ciclo 
- MOV CX,4 
- C1: 
+ ; inicia impresion de cadena leida desde teclado 
+   lea bx, id0 + 1 
+   call implec
+   call slinea
+
 ; Impresion de cadena
 LEA DX, tmp2
 MOV AH,09
 INT 21H
+ ; inicia ciclo 
+ MOV CX,10 
+ C0: 
+; Impresion de cadena
+LEA DX, tmp3
+MOV AH,09
+INT 21H
+ loop C0 
+ ; fin ciclo 
+ ; inicia ciclo 
+ MOV CX,2 
+ C1: 
+; Impresion de cadena
+LEA DX, tmp4
+MOV AH,09
+INT 21H
  loop C1 
  ; fin ciclo 
+; Impresion de cadena
+LEA DX, tmp5
+MOV AH,09
+INT 21H
+    extern implec:far ; imprimir cadena leida de teclado
     extern impnumde:far ; imprime numero decimal
-    ; extern impcar:far ; imprime caracter
     extern slinea:far ; salto de linea
     extern impcad:far  ; imprime cadena
     extern leercad:far ; lee cadena desde teclado

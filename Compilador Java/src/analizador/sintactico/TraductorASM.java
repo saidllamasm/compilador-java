@@ -47,8 +47,8 @@ public class TraductorASM {
                                 "    mov ax,extra        ; obligatoria\n" +
                                 "    mov es,ax           ; obligatoria\n";
     
-    final String libs = "    extern impnumde:far ; imprime numero decimal\n" +
-                        "    ; extern impcar:far ; imprime caracter\n" +
+    final String libs = "    extern implec:far ; imprimir cadena leida de teclado\n" +
+                        "    extern impnumde:far ; imprime numero decimal\n" +
                         "    extern slinea:far ; salto de linea\n" +
                         "    extern impcad:far  ; imprime cadena\n" +
                         "    extern leercad:far ; lee cadena desde teclado\n";
@@ -171,6 +171,8 @@ public class TraductorASM {
                 ciclo = true;
             } else if(renglon.split(" ")[0].equals("compara_si")  && !ciclo){
                 //new_content += ""+translateAsigna(renglon);
+                translateCompara(i, content, renglon);
+                ciclo = true;
             } else{
                 if(renglon.split(" ")[0].equals("fin_compara") || renglon.split(" ")[0].equals("fin_ciclo")){
                     //new_content += "";//salto en ensamblador
@@ -185,34 +187,165 @@ public class TraductorASM {
     public void translateAsigna(String content){
     }
     
-    public void translateCiclo(int indice, String content, String condicion){
-        System.out.println(condicion);
-        String next_content = "";
-        for(int i = indice; i < content.length(); i++){
-            next_content += content.charAt(i);
-        }
-        String instrucciones = "";
-        String rowsNext[] = next_content.split("\n");
+    public void translateCompara(int indice, String content, String condicion){
+        Tools tools = new Tools(); 
+        //System.out.println(condicion);
+        String partsCondicion[] = condicion.split(" ");
+        
+        //System.out.println(partsCondicion[2]); // iteracion
+        //System.out.println(partsCondicion[3]); // operador relacional
+        //System.out.println(partsCondicion[4]); // limite
+        
+        int val1, val2, iteraciones = 0;
         
         
-        for(int i = 0; i < rowsNext.length; i++){
-            String partsNext[] = rowsNext[i].split(" ");   
-            if(partsNext[0].equals("fin_ciclo") ){
-                //System.out.println("PARA!");
-                break;
-            }else{
-                instrucciones += rowsNext[i] +"\n" ;
+        // a < b
+        // a = val1
+        // b = val2
+        
+        if(tools.isCorrectNameVariable(partsCondicion[2])){
+            // es variable, traer el valor con el metodo getValVar
+            if(!getValVar(partsCondicion[2]).equals( "null")){
+             val1 = Integer.parseInt(getValVar(partsCondicion[2]).replace(" ",""));   
+            }else {
+                val1 = 0;
             }
+        } else {
+            // es valor
+            val1 = Integer.parseInt(partsCondicion[2]);
         }
-        code += " ; inicia ciclo \n"+
-                " MOV CX,4 \n"+
-                " C"+idcSalto+": \n";
-        filterCode(instrucciones);
-        code += " loop C"+idcSalto+" \n"+
-                " ; fin ciclo \n";
-        //System.out.println(instrucciones);
+        if(tools.isCorrectNameVariable(partsCondicion[4])){
+            // es variable, traer el valor con el metodo getValVar
+            if(!getValVar(partsCondicion[4]).equals( "null")){
+             val2 = Integer.parseInt(getValVar(partsCondicion[4]).replace(" ",""));   
+            }else {
+                val2 = 0;
+            }
+        } else {
+            // es valor
+            val2 = Integer.parseInt(partsCondicion[4]);
+        }
         
-        idcSalto++;
+        // calcular iteraciones con base al operador relacional
+        switch(partsCondicion[3]){
+            case ">":
+                iteraciones = val1 - val2;
+                break;
+            case "<":
+                iteraciones = val2 - val1;
+                break;
+        }
+        if(iteraciones > 0){
+            //System.out.println("PASA ");
+            String next_content = "";
+            for(int i = indice; i < content.length(); i++){
+                next_content += content.charAt(i);
+            }
+            String instrucciones = "";
+            String rowsNext[] = next_content.split("\n");
+
+
+            for(int i = 0; i < rowsNext.length; i++){
+                String partsNext[] = rowsNext[i].split(" ");   
+                if(partsNext[0].equals("fin_ciclo") ){
+                    //System.out.println("PARA!");
+                    break;
+                }else{
+                    instrucciones += rowsNext[i] +"\n" ;
+                }
+            }
+            System.out.println(instrucciones);
+            // en 'instrucciones' se quedan guardadas las instrucciones dentro de esta condición
+            filterCode(instrucciones);
+        } else {
+            System.out.println("no PASA ");
+        }
+    }
+    
+    public void translateCiclo(int indice, String content, String condicion){
+        Tools tools = new Tools(); 
+        //System.out.println(condicion);
+        String partsCondicion[] = condicion.split(" ");
+        
+        //System.out.println(partsCondicion[2]); // iteracion
+        //System.out.println(partsCondicion[3]); // operador relacional
+        //System.out.println(partsCondicion[4]); // limite
+        
+        int val1, val2, iteraciones = 0;
+        
+        
+        // a < b
+        // a = val1
+        // b = val2
+        
+        if(tools.isCorrectNameVariable(partsCondicion[2])){
+            // es variable, traer el valor con el metodo getValVar
+            if(!getValVar(partsCondicion[2]).equals( "null")){
+             val1 = Integer.parseInt(getValVar(partsCondicion[2]).replace(" ",""));   
+            }else {
+                val1 = 0;
+            }
+        } else {
+            // es valor
+            val1 = Integer.parseInt(partsCondicion[2]);
+        }
+        if(tools.isCorrectNameVariable(partsCondicion[4])){
+            // es variable, traer el valor con el metodo getValVar
+            if(!getValVar(partsCondicion[4]).equals( "null")){
+             val2 = Integer.parseInt(getValVar(partsCondicion[4]).replace(" ",""));   
+            }else {
+                val2 = 0;
+            }
+        } else {
+            // es valor
+            val2 = Integer.parseInt(partsCondicion[4]);
+        }
+        
+        // calcular iteraciones con base al operador relacional
+        switch(partsCondicion[3]){
+            case ">":
+                iteraciones = val1 - val2;
+                break;
+            case "<":
+                iteraciones = val2 - val1;
+                break;
+        }
+        
+        
+        // calcular diferencia entre valor 1 y valor 2, si el resultado es positivo entonces continuar con el codigo
+        if(iteraciones > 0){
+            String next_content = "";
+            for(int i = indice; i < content.length(); i++){
+                next_content += content.charAt(i);
+            }
+            String instrucciones = "";
+            String rowsNext[] = next_content.split("\n");
+
+
+            for(int i = 0; i < rowsNext.length; i++){
+                String partsNext[] = rowsNext[i].split(" ");   
+                if(partsNext[0].equals("fin_ciclo") ){
+                    //System.out.println("PARA!");
+                    break;
+                }else{
+                    instrucciones += rowsNext[i] +"\n" ;
+                }
+            }
+            code += " ; inicia ciclo \n"+
+                    " MOV CX,"+iteraciones+" \n"+
+                    " C"+idcSalto+": \n";
+            filterCode(instrucciones);
+            code += " loop C"+idcSalto+" \n"+
+                    " ; fin ciclo \n";
+
+            idcSalto++;
+            /*endhere*/
+        }else{
+            // significa que la condicion no se cumple, por tanto no es necesario hacer el ciclo
+            ///System.out.println(CustomColors.BLUE+" NOpasa " );
+        }
+        
+        // sino, no 
         
         //System.out.println(CustomColors.PURPLE+instrucciones);
         //System.out.println(indice+" "+content.charAt(indice+2)+" "+content.charAt(indice+1));
@@ -222,16 +355,11 @@ public class TraductorASM {
         String new_content = "";
         //System.out.println(CustomColors.YELLOW+content.split(" ")[1].toString());
         if(isDataReading(content.split(" ")[1])){
-            new_content += "mov 	cx, 0 ;limpia contador\n" +
-            "	lea 	bx, "+getIDVar(content.split(" ")[1]) +" + 1 \n"+
-            "	mov 	cl, [bx] ;almacena en cl el numero de caracteres ingresados\n" +
-            "	\n" +
-            "impEnt:\n" +
-           "MOV DL,[bx+1]\n" +
-"      	MOV AH,2\n" +
-"	  	INT 21H\n" +
-"		INC bx\n"+
-            "loop 		impEnt\n";
+            new_content += " ; inicia impresion de cadena leida desde teclado \n" +
+                    "   lea bx, "+getIDVar(content.split(" ")[1]) +" + 1 \n"+
+                    "   call implec\n"+
+                    "   call slinea\n"
+                    ;
         }else{
             if(getIDVar(content.split(" ")[1]).equals("")){
                 //System.out.println(CustomColors.YELLOW+ getIDVar( content.split(" ")[1]));
@@ -312,6 +440,21 @@ public class TraductorASM {
             Simbolo simbolo = tablaSimbolos.elementAt(i);
             if(simbolo.getNombre().equals(name)){
                 type =  ""+simbolo.getTipo();
+                break;
+            }
+        }
+        //System.out.println(CustomColors.YELLOW+id);
+        return type; // retornar id de la variable declarada en la tabla de simbolos
+        
+    }
+    
+    public String getValVar(String name){
+        // recorrer vector de todas las variables
+        String type ="";
+        for(int i = 0; i < tablaSimbolos.size(); i++){
+            Simbolo simbolo = tablaSimbolos.elementAt(i);
+            if(simbolo.getNombre().equals(name)){
+                type =  ""+simbolo.getValor();
                 break;
             }
         }

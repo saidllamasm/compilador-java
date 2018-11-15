@@ -1,19 +1,25 @@
-crea entero a
+imprime "Hola_ingresa_una_cadena"
 
-ciclo ( a < 4 )
+crea entero lect
 
-	imprime "hola"
+lea lect
 
+crea entero a = 0
+
+imprime "ingresaste_la_cadena"
+
+imprime lect
+
+imprime "inicia_el_ciclo"
+ciclo ( a < 10 )
+	imprime "."
+fin_ciclo
+
+ciclo ( a < 2 )
+	imprime "otro_ciclo"
 fin_ciclo
 
 
-//imprime "Hola_ingresa_un_numero"
-
-//crea entero lect
-
-//lea lect
-
-//imprime "Tu_entrada_fue:" 
-
-//imprime lect
-
+compara_si ( a < 2 )
+	imprime "a_es_menor_que_dos"
+fin_compara
