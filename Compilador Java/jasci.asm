@@ -4,6 +4,8 @@ pila ends
 datos segment para public 'data'
     id0 DB 0
 tmp0 DB "hola" , 10, 13, 24H
+tmp1 DB "fuera del ciclo" , 10, 13, 24H
+tmp2 DB "estoy en otro ciclo" , 10, 13, 24H
 datos ends
 extra segment para public 'data'
 extra ends
@@ -38,6 +40,19 @@ LEA DX, tmp0
 MOV AH,09
 INT 21H
  loop C0 
+ ; fin ciclo 
+; Impresion de cadena
+LEA DX, tmp1
+MOV AH,09
+INT 21H
+ ; inicia ciclo 
+ MOV CX,4 
+ C1: 
+; Impresion de cadena
+LEA DX, tmp2
+MOV AH,09
+INT 21H
+ loop C1 
  ; fin ciclo 
     extern impnumde:far ; imprime numero decimal
     ; extern impcar:far ; imprime caracter

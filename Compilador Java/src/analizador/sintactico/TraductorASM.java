@@ -199,6 +199,7 @@ public class TraductorASM {
             String partsNext[] = rowsNext[i].split(" ");   
             if(partsNext[0].equals("fin_ciclo") ){
                 //System.out.println("PARA!");
+                break;
             }else{
                 instrucciones += rowsNext[i] +"\n" ;
             }
@@ -211,7 +212,7 @@ public class TraductorASM {
                 " ; fin ciclo \n";
         //System.out.println(instrucciones);
         
-        
+        idcSalto++;
         
         //System.out.println(CustomColors.PURPLE+instrucciones);
         //System.out.println(indice+" "+content.charAt(indice+2)+" "+content.charAt(indice+1));
