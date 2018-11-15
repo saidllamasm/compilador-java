@@ -25,6 +25,7 @@ import java.util.Vector;
 public class CompiladorAnalizador {
     
     static Vector <Simbolo> simbolos = new Vector();
+    static int nodes_ciclo = 0, nodes_condicion = 0;
     
     public static boolean analizar(String instruccion){
         boolean isCorrect = false;
@@ -169,6 +170,17 @@ public class CompiladorAnalizador {
                 String[] res =  variablesDeclaradas.isRegisterVariable(lexemas[1]);
                 //System.out.println(CustomColors.GREEN+bk_instruccion+" success");
                 if(res[0].equals("verdadero")){
+                    // actualizo el estado de la variable para retirar el valor y  asignarle true en lectura
+                    for(int i = 0; i < simbolos.size(); i++){
+                        Simbolo simbolo = simbolos.elementAt(i);
+                        if(simbolo.getNombre().equals(lexemas[1])){
+                            System.out.println("update");
+                            //simbolo.setValor("");
+                            simbolo.setLectura(true);
+                            break;
+                        }
+                    }
+                    //
                     System.out.println(CustomColors.GREEN+bk_instruccion+" success");
                     isCorrect = true;
                 }else{
@@ -252,6 +264,7 @@ public class CompiladorAnalizador {
                 if ( isCorrect ){
                     // en teoria va bien, ahora hay que analizar que las variables esten registradas y que correspondan al tipo de dato con el que se compara
                     System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
+                    nodes_ciclo++;
                 } else{
                     System.out.println(CustomColors.RED+bk_instruccion+" "+log_tmp);
                 }
@@ -334,6 +347,7 @@ public class CompiladorAnalizador {
                 if ( isCorrect ){
                     // en teoria va bien, ahora hay que analizar que las variables esten registradas y que correspondan al tipo de dato con el que se compara
                     System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
+                    nodes_condicion++;
                 } else{
                     System.out.println(CustomColors.RED+bk_instruccion+" "+log_tmp);
                 }
@@ -402,6 +416,22 @@ public class CompiladorAnalizador {
             } else{
                 System.out.println(CustomColors.RED+bk_instruccion+" "+tmp_log);
             }
+        } else if(instruccion.split(" ")[0].equals("fin_ciclo")){
+            if(nodes_ciclo < 1)
+                System.out.println(CustomColors.RED+bk_instruccion+" error, ciclo no definido");
+            else{
+                nodes_ciclo--;
+                isCorrect = true;
+                System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
+            }
+        } else if(instruccion.split(" ")[0].equals("fin_compara")){
+            if(nodes_condicion < 1)
+                System.out.println(CustomColors.RED+bk_instruccion+" error, condicion no definido");
+            else {
+                nodes_condicion--;
+                isCorrect = true;
+                System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
+            }
         } else {
             System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE001");
         }
@@ -410,6 +440,12 @@ public class CompiladorAnalizador {
            
     }
     
+    public boolean isConditionsCorrects(){
+        boolean flag = true;
+        if(nodes_condicion > 0 || nodes_ciclo > 0 )
+            flag = false;
+        return flag;
+    }
     public Vector getVars(){
         return this.simbolos;
     }

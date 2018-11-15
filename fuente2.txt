@@ -1,0 +1,19 @@
+crea entero a
+
+ciclo ( a < 4 )
+
+	imprime "hola"
+
+fin_ciclo
+
+
+//imprime "Hola_ingresa_un_numero"
+
+//crea entero lect
+
+//lea lect
+
+//imprime "Tu_entrada_fue:" 
+
+//imprime lect
+

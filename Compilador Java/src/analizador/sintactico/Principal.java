@@ -72,6 +72,10 @@ public class Principal {
             n_renglon++;
                 
         }
+        if(!analizador.isConditionsCorrects()){
+            System.out.println(CustomColors.RED+" problema al cerrar ciclo o condicion");
+            success = false;
+        }
         
         System.out.println("---");
         System.out.println("");
@@ -79,8 +83,10 @@ public class Principal {
         Vector <Simbolo> vector = analizador.getVars();
         System.out.println("Nombre | ID  | Tipo | Valor | Lectura");
         for(int i = 0; i < vector.size(); i++){
+            
             Simbolo simbolo = vector.elementAt(i);
-            System.out.print(simbolo.getNombre()+"      " + simbolo.getId() + ""+i+"   " + simbolo.getTipo() + "  " + simbolo.getValor() + "  "+simbolo.isLectura());
+            simbolo.setId("id"+i);
+            System.out.print(simbolo.getNombre()+"      " + simbolo.getId() +"   " + simbolo.getTipo() + "  " + simbolo.getValor() + "  "+simbolo.isLectura());
             System.out.println("");
             
         }

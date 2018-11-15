@@ -23,7 +23,7 @@ import java.util.Vector;
  * @author saidllamas
  */
 public class EscrituraArchivo {
-    final String nombre_Archivo = "bin-jasci.asm";
+    final String nombre_Archivo = "jasci.asm";
     
     public void crearArchivoASM(String contenido){
         File f = new File(nombre_Archivo);

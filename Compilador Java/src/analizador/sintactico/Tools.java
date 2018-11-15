@@ -157,9 +157,6 @@ public class Tools {
             return false;
     }
     
-    public static String cleanVarString(String value){
-        return value.replace('_', ' ');
-    }
     
     public static String printString(String value){
         return value.replace('"', ' ');
@@ -168,5 +165,13 @@ public class Tools {
     // cambia de cadena a valor booleano
     public static boolean convertStringToBoolean(String val){
         return val.equals("verdadero");
+    }
+    
+    public String cleanVarString(String value){
+        return value.replace('_', ' ');
+    }
+    
+    public String retireQuotes(String value){
+        return value.replace('"', ' ');
     }
 }
