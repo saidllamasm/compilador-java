@@ -163,8 +163,8 @@ public class Automatas {
         INSTRUCCION_CONDICION[2].setId(new String[]{"<var>"});
         INSTRUCCION_CONDICION[2].setAddress(new Automata[]{
             INSTRUCCION_CONDICION[3],
-            INSTRUCCION_CONDICION[5],
-            INSTRUCCION_CONDICION[6],
+            //INSTRUCCION_CONDICION[5],
+            //INSTRUCCION_CONDICION[6],
             
         });
         
@@ -176,7 +176,7 @@ public class Automatas {
         INSTRUCCION_CONDICION[4].setId(new String[]{"<var>","<val>"});
         INSTRUCCION_CONDICION[4].setAddress(new Automata[]{
             INSTRUCCION_CONDICION[5],
-            INSTRUCCION_CONDICION[6],
+            //INSTRUCCION_CONDICION[6],
         });
         
         INSTRUCCION_CONDICION[5].setId(new String[]{")"});

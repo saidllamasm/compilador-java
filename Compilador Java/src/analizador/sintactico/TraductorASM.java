@@ -63,6 +63,7 @@ public class TraductorASM {
     String code = "", varsTmps = "";
     int idAux = 0;
     int idcSalto = 0; // controla el id del salto para ciclos
+    int idcCond = 0; // controla el id de los saltos para condicion
     
     public String clearScreen(){
         
@@ -188,78 +189,196 @@ public class TraductorASM {
     }
     
     public void translateCompara(int indice, String content, String condicion){
-        Tools tools = new Tools(); 
-        //System.out.println(condicion);
+        
+        
+        Tools tools = new Tools();
         String partsCondicion[] = condicion.split(" ");
+        //int val1 = 0, val2 = 0;
         
-        //System.out.println(partsCondicion[2]); // iteracion
-        //System.out.println(partsCondicion[3]); // operador relacional
-        //System.out.println(partsCondicion[4]); // limite
-        
-        int val1, val2, iteraciones = 0;
-        
-        
-        // a < b
-        // a = val1
-        // b = val2
-        
-        if(tools.isCorrectNameVariable(partsCondicion[2])){
-            // es variable, traer el valor con el metodo getValVar
-            if(!getValVar(partsCondicion[2]).equals( "null")){
-             val1 = Integer.parseInt(getValVar(partsCondicion[2]).replace(" ",""));   
-            }else {
-                val1 = 0;
-            }
-        } else {
-            // es valor
-            val1 = Integer.parseInt(partsCondicion[2]);
-        }
-        if(tools.isCorrectNameVariable(partsCondicion[4])){
-            // es variable, traer el valor con el metodo getValVar
-            if(!getValVar(partsCondicion[4]).equals( "null")){
-             val2 = Integer.parseInt(getValVar(partsCondicion[4]).replace(" ",""));   
-            }else {
-                val2 = 0;
-            }
-        } else {
-            // es valor
-            val2 = Integer.parseInt(partsCondicion[4]);
-        }
-        
-        // calcular iteraciones con base al operador relacional
-        switch(partsCondicion[3]){
-            case ">":
-                iteraciones = val1 - val2;
-                break;
-            case "<":
-                iteraciones = val2 - val1;
-                break;
-        }
-        if(iteraciones > 0){
-            //System.out.println("PASA ");
-            String next_content = "";
-            for(int i = indice; i < content.length(); i++){
-                next_content += content.charAt(i);
-            }
-            String instrucciones = "";
-            String rowsNext[] = next_content.split("\n");
-
-
-            for(int i = 0; i < rowsNext.length; i++){
-                String partsNext[] = rowsNext[i].split(" ");   
-                if(partsNext[0].equals("fin_ciclo") ){
-                    //System.out.println("PARA!");
-                    break;
-                }else{
-                    instrucciones += rowsNext[i] +"\n" ;
+        if(tools.isCorrectNameVariable(partsCondicion[2]) && tools.isCorrectNameVariable(partsCondicion[4])){
+            if(isDataReading(partsCondicion[2]) && isDataReading(partsCondicion[4])){
+                String next_content = "";
+                for(int i = indice; i < content.length(); i++){
+                    next_content += content.charAt(i);
                 }
+                String instrucciones = "";
+                String rowsNext[] = next_content.split("\n");
+
+
+                for(int i = 0; i < rowsNext.length; i++){
+                    String partsNext[] = rowsNext[i].split(" ");   
+                    if(partsNext[0].equals("fin_compara") ){
+                        //System.out.println("PARA!");
+                        break;
+                    }else{
+                        instrucciones += rowsNext[i] +"\n" ;
+                    }
+                }
+                code += ";;;;;;;;;;;;;;;;\n" +
+                        "	lea bx,"+getIDVar(partsCondicion[2])+"\n" +
+                        "	inc bx\n" +
+                        "	mov cl,[bx]\n" +
+                        "	mov CH,0\n" +
+                        "	PUSH CX\n" +
+                        "   \n" +
+                        "	CDR"+idcCond+":\n" +
+                        "		INC BX\n" +
+                        "		SUB[BX],BYTE PTR 30H\n" +
+                        "	LOOP CDR"+idcCond+"	\n" +
+                        "\n" +
+                        "	LEA BX,"+getIDVar(partsCondicion[2])+"+2;AQUI SE GUARDA EL 2\n" +
+                        "	MOV AL,[BX]\n" +
+                        "	MOV DI,0AH ;NO PUEDE SER DX\n" +
+                        "	MOV AH,0; PARA QUITAR EL 09 DE AH, PUESTO EN LA FUNCION 9 DE LA INT 21 \n" +
+                        "	POP CX\n" +
+                        "	DEC CX\n" +
+                        "\n" +
+                        "	MYS"+idcCond+":\n" +
+                        "		INC BX\n" +
+                        "		MUL DI\n" +
+                        "		MOV DL,[BX]\n" +
+                        "		MOV DH,0\n" +
+                        "		ADD AX,DX	\n" +
+                        "	LOOP MYS"+idcCond+"\n" +
+                        "	;; AX tiene el decimal leido\n" +
+                        "	;;;;;;;;;;;;;;;;\n" +
+                        "\n" +
+                        "	MOV BX, AX ; en bx primer numero\n" +
+                        "	PUSH BX\n" +
+                        "	;;;;;;;;;;;;;;;;\n" +
+                        "	lea bx,"+getIDVar(partsCondicion[4])+"\n" +
+                        "	inc bx\n" +
+                        "	mov cl,[bx]\n" +
+                        "	mov CH,0\n" +
+                        "	PUSH CX\n" +
+                        "   \n" +
+                        "	CDR"+(idcCond+1)+":\n" +
+                        "		INC BX\n" +
+                        "		SUB[BX],BYTE PTR 30H\n" +
+                        "	LOOP CDR"+(idcCond+1)+"\n" +
+                        "\n" +
+                        "	LEA BX,"+getIDVar(partsCondicion[4])+"+2;AQUI SE GUARDA EL 2\n" +
+                        "	MOV AL,[BX]\n" +
+                        "	MOV DI,0AH ;NO PUEDE SER DX\n" +
+                        "	MOV AH,0; PARA QUITAR EL 09 DE AH, PUESTO EN LA FUNCION 9 DE LA INT 21 \n" +
+                        "	POP CX\n" +
+                        "	DEC CX\n" +
+                        "\n" +
+                        "	MYS"+(idcCond+1)+":\n" +
+                        "		INC BX\n" +
+                        "		MUL DI\n" +
+                        "		MOV DL,[BX]\n" +
+                        "		MOV DH,0\n" +
+                        "		ADD AX,DX	\n" +
+                        "	LOOP MYS"+(idcCond+1)+"\n" +
+                        "	;; AX tiene el decimal leido\n" +
+                        "	;;;;;;;;;;;;;;;;\n" +
+                        "\n" +
+                        "	POP BX\n" +
+                        "	;;; ejemplo de uso del numero ingresado como comparacion para un if ;;;\n" +
+                        "	CMP BX,AX ;\n" ;
+                        if(partsCondicion[3].equals("==")){
+                            code += "JE EQL"+idcCond+"\n";
+                            code += "JMP FIN"+idcCond+"\n";
+                            code += "EQL"+idcCond+": \n" +
+                                    "		; code ;\n";
+                            filterCode(instrucciones);
+                            code +="		JMP FIN"+idcCond+"\n";
+                        }else if(partsCondicion[3].equals("<")){
+                             code += "JL MENOR"+idcCond+"\n";
+                            code += "JMP FIN"+idcCond+"\n";
+                            code += "MENOR"+idcCond+": \n" +
+                                    "		; code ;\n";
+                            filterCode(instrucciones);
+                            code +=        "		JMP FIN"+idcCond+"\n";
+                        } else if(partsCondicion[3].equals(">")){
+                            code += "JG MAYOR"+idcCond+"\n";
+                            code += "JMP FIN"+idcCond+"\n";
+                            code += "MAYOR"+idcCond+": \n" +
+                                    "		; code ;\n";
+                                   filterCode(instrucciones);
+                            code +="		JMP FIN"+idcCond+"\n";
+                        }
+                        code +="FIN"+idcCond+":\n";
+                idcCond+=3;
+            }else if( (!isDataReading(partsCondicion[2]) && !isDataReading(partsCondicion[4]) )  ){
+                int val1, val2;
+                boolean cumple = false;
+        
+                // a < b
+                // a = val1
+                // b = val2
+
+                if(tools.isCorrectNameVariable(partsCondicion[2])){
+                    // es variable, traer el valor con el metodo getValVar
+                    if(!getValVar(partsCondicion[2]).equals( "null")){
+                     val1 = Integer.parseInt(getValVar(partsCondicion[2]).replace(" ",""));   
+                    }else {
+                        val1 = 0;
+                    }
+                } else {
+                    // es valor
+                    val1 = Integer.parseInt(partsCondicion[2]);
+                }
+                if(tools.isCorrectNameVariable(partsCondicion[4])){
+                    // es variable, traer el valor con el metodo getValVar
+                    if(!getValVar(partsCondicion[4]).equals( "null")){
+                     val2 = Integer.parseInt(getValVar(partsCondicion[4]).replace(" ",""));   
+                    }else {
+                        val2 = 0;
+                    }
+                } else {
+                    // es valor
+                    val2 = Integer.parseInt(partsCondicion[4]);
+                }
+
+                // calcular iteraciones con base al operador relacional
+                switch(partsCondicion[3]){
+                    case ">":
+                        if(val1 > val2 )
+                            cumple = true;
+                        break;
+                    case "<":
+                        if(val1 < val2 )
+                            cumple = true;
+                        break;
+                    case "==":
+                        if(val1 == val2 )
+                            cumple = true;
+                        break;
+                }
+                if(cumple){
+                    //System.out.println("PASA ");
+                    String next_content = "";
+                    for(int i = indice; i < content.length(); i++){
+                        next_content += content.charAt(i);
+                    }
+                    String instrucciones = "";
+                    String rowsNext[] = next_content.split("\n");
+
+
+                    for(int i = 0; i < rowsNext.length; i++){
+                        String partsNext[] = rowsNext[i].split(" ");   
+                        if(partsNext[0].equals("fin_ciclo") ){
+                            //System.out.println("PARA!");
+                            break;
+                        }else{
+                            instrucciones += rowsNext[i] +"\n" ;
+                        }
+                    }
+                    System.out.println(instrucciones);
+                    // en 'instrucciones' se quedan guardadas las instrucciones dentro de esta condición
+                    filterCode(instrucciones);
+                }
+            }else{
+                //caso especial, variable de lectura con variable definida
+                System.out.println("variable de lectura con variable definida");
             }
-            System.out.println(instrucciones);
-            // en 'instrucciones' se quedan guardadas las instrucciones dentro de esta condición
-            filterCode(instrucciones);
         } else {
-            System.out.println("no PASA ");
+            // caso especial #2 variable de lectura con numero
+            System.out.println("variable de lectura con numero");
         }
+        
     }
     
     public void translateCiclo(int indice, String content, String condicion){
@@ -271,8 +390,8 @@ public class TraductorASM {
         //System.out.println(partsCondicion[3]); // operador relacional
         //System.out.println(partsCondicion[4]); // limite
         
-        int val1, val2, iteraciones = 0;
-        
+        int val1 = 0, val2 = 0, iteraciones = 0;
+        boolean withRead = false;
         
         // a < b
         // a = val1
@@ -280,40 +399,145 @@ public class TraductorASM {
         
         if(tools.isCorrectNameVariable(partsCondicion[2])){
             // es variable, traer el valor con el metodo getValVar
-            if(!getValVar(partsCondicion[2]).equals( "null")){
-             val1 = Integer.parseInt(getValVar(partsCondicion[2]).replace(" ",""));   
-            }else {
-                val1 = 0;
+            if(isDataReading(partsCondicion[2])){
+                //code += getIDVar(partsCondicion[2]) + " ES LECTURA!";
+                withRead = true;
+                code += ";;;;;;;;;;;;;;;;\n" +
+                        "	lea bx," +getIDVar(partsCondicion[2])+"\n" +
+                        "	inc bx\n" +
+                        "	mov cl,[bx]\n" +
+                        "	mov CH,0\n" +
+                        "	PUSH CX\n" +
+                        "   \n" +
+                        "	CDR:\n" +
+                        "		INC BX\n" +
+                        "		SUB[BX],BYTE PTR 30H\n" +
+                        "	LOOP CDR	\n" +
+                        "\n" +
+                        "	LEA BX,"+getIDVar(partsCondicion[2])+"+2;AQUI SE GUARDA EL 2\n" +
+                        "	MOV AL,[BX]\n" +
+                        "	MOV DI,0AH ;NO PUEDE SER DX\n" +
+                        "	MOV AH,0; PARA QUITAR EL 09 DE AH, PUESTO EN LA FUNCION 9 DE LA INT 21 \n" +
+                        "	POP CX\n" +
+                        "	DEC CX\n" +
+                        "\n" +
+                        "	MYS:\n" +
+                        "		INC BX\n" +
+                        "		MUL DI\n" +
+                        "		MOV DL,[BX]\n" +
+                        "		MOV DH,0\n" +
+                        "		ADD AX,DX	\n" +
+                        "	LOOP MYS\n" +
+                        "	;; AX tiene el decimal leido\n" +
+                        "	;;;;;;;;;;;;;;;;";
+            }else{
+                if(!getValVar(partsCondicion[2]).equals( "null")){
+                    val1 = Integer.parseInt(getValVar(partsCondicion[2]).replace(" ",""));   
+                }else {
+                   val1 = 0;
+                }
             }
+            
         } else {
             // es valor
             val1 = Integer.parseInt(partsCondicion[2]);
         }
-        if(tools.isCorrectNameVariable(partsCondicion[4])){
-            // es variable, traer el valor con el metodo getValVar
-            if(!getValVar(partsCondicion[4]).equals( "null")){
-             val2 = Integer.parseInt(getValVar(partsCondicion[4]).replace(" ",""));   
-            }else {
-                val2 = 0;
+        if(partsCondicion.length >= 5){
+            if(tools.isCorrectNameVariable(partsCondicion[4])){
+                // es variable, traer el valor con el metodo getValVar
+                if(isDataReading(partsCondicion[2])){
+                    //code += getIDVar(partsCondicion[2]) + " ES LECTURA!";
+                    withRead = true;
+                    code += ";;;;;;;;;;;;;;;;\n" +
+                            "	lea bx," +getIDVar(partsCondicion[2])+"\n" +
+                            "	inc bx\n" +
+                            "	mov cl,[bx]\n" +
+                            "	mov CH,0\n" +
+                            "	PUSH CX\n" +
+                            "   \n" +
+                            "	CDR:\n" +
+                            "		INC BX\n" +
+                            "		SUB[BX],BYTE PTR 30H\n" +
+                            "	LOOP CDR	\n" +
+                            "\n" +
+                            "	LEA BX,"+getIDVar(partsCondicion[2])+"+2;AQUI SE GUARDA EL 2\n" +
+                            "	MOV AL,[BX]\n" +
+                            "	MOV DI,0AH ;NO PUEDE SER DX\n" +
+                            "	MOV AH,0; PARA QUITAR EL 09 DE AH, PUESTO EN LA FUNCION 9 DE LA INT 21 \n" +
+                            "	POP CX\n" +
+                            "	DEC CX\n" +
+                            "\n" +
+                            "	MYS:\n" +
+                            "		INC BX\n" +
+                            "		MUL DI\n" +
+                            "		MOV DL,[BX]\n" +
+                            "		MOV DH,0\n" +
+                            "		ADD AX,DX	\n" +
+                            "	LOOP MYS\n" +
+                            "	;; AX tiene el decimal leido\n" +
+                            "	;;;;;;;;;;;;;;;;";
+                }else{
+                    if(!getValVar(partsCondicion[4]).equals( "null")){
+                        val2 = Integer.parseInt(getValVar(partsCondicion[4]).replace(" ",""));   
+                    } else {
+                       val2 = 0;
+                    }
+                }
+
+            } else {
+                // es valor
+                val2 = Integer.parseInt(partsCondicion[4]);
             }
-        } else {
-            // es valor
-            val2 = Integer.parseInt(partsCondicion[4]);
-        }
-        
-        // calcular iteraciones con base al operador relacional
-        switch(partsCondicion[3]){
-            case ">":
-                iteraciones = val1 - val2;
-                break;
-            case "<":
-                iteraciones = val2 - val1;
-                break;
-        }
-        
-        
-        // calcular diferencia entre valor 1 y valor 2, si el resultado es positivo entonces continuar con el codigo
-        if(iteraciones > 0){
+
+            // calcular iteraciones con base al operador relacional
+            switch(partsCondicion[3]){
+                case ">":
+                    iteraciones = val1 - val2;
+                    break;
+                case "<":
+                    iteraciones = val2 - val1;
+                    //add case ==
+                    break;
+            }
+
+
+            // calcular diferencia entre valor 1 y valor 2, si el resultado es positivo entonces continuar con el codigo
+            if(iteraciones > 0){
+                String next_content = "";
+                for(int i = indice; i < content.length(); i++){
+                    next_content += content.charAt(i);
+                }
+                String instrucciones = "";
+                String rowsNext[] = next_content.split("\n");
+
+
+                for(int i = 0; i < rowsNext.length; i++){
+                    String partsNext[] = rowsNext[i].split(" ");   
+                    if(partsNext[0].equals("fin_ciclo") ){
+                        //System.out.println("PARA!");
+                        break;
+                    }else{
+                        instrucciones += rowsNext[i] +"\n" ;
+                    }
+                }
+                if(withRead){
+
+                }else{
+                    code += " ; inicia ciclo \n"+
+                        " MOV CX,"+iteraciones+" \n"+
+                        " C"+idcSalto+": \n";
+                    filterCode(instrucciones);
+                    code += " loop C"+idcSalto+" \n"+
+                            " ; fin ciclo \n";
+                }
+                idcSalto++;
+                /*endhere*/
+            }else{
+                // significa que la condicion no se cumple, por tanto no es necesario hacer el ciclo
+                ///System.out.println(CustomColors.BLUE+" NOpasa " );
+            }
+        }else{
+            code += " ;;;;;;;   EL CICLO REQUIERE QUE EN CX MANDE AX   ;;;;\n";
             String next_content = "";
             for(int i = indice; i < content.length(); i++){
                 next_content += content.charAt(i);
@@ -332,19 +556,13 @@ public class TraductorASM {
                 }
             }
             code += " ; inicia ciclo \n"+
-                    " MOV CX,"+iteraciones+" \n"+
-                    " C"+idcSalto+": \n";
-            filterCode(instrucciones);
-            code += " loop C"+idcSalto+" \n"+
-                    " ; fin ciclo \n";
-
-            idcSalto++;
-            /*endhere*/
-        }else{
-            // significa que la condicion no se cumple, por tanto no es necesario hacer el ciclo
-            ///System.out.println(CustomColors.BLUE+" NOpasa " );
+                        " MOV CX,AX \n"+
+                        " C"+idcSalto+": \n";
+                    filterCode(instrucciones);
+                    code += " loop C"+idcSalto+" \n"+
+                            " ; fin ciclo \n";
+            
         }
-        
         // sino, no 
         
         //System.out.println(CustomColors.PURPLE+instrucciones);

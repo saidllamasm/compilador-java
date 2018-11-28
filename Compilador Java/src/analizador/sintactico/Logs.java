@@ -16,7 +16,7 @@ public class Logs {
     protected final String ERROR_VARIABLE_NAME = "<identifier> expected";
     
     // exitos
-    protected final String SUCCESS_BUILD = "BUILD SUCCESSFUL -> run bin-jasci.asm";
+    protected final String SUCCESS_BUILD = "BUILD SUCCESSFUL -> run jasci.asm";
     
     // palabras reservadas
     protected final String[] PAL_RESERV = new String[]{
