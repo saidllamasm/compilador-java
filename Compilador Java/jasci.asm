@@ -2,8 +2,7 @@
 pila segment para stack 'stack'
 pila ends
 datos segment para public 'data'
-    id0 DB 1 
-    id1 DB 3 
+    id0 DB 5 5 34 9 55 468 34 71 34 
 datos ends
 extra segment para public 'data'
 extra ends

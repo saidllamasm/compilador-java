@@ -39,31 +39,20 @@ public class Tools {
                 if(isCorrectNameVariable(lexemas[2])){
                    lexemas[2] = "<var>";
                    if(lexemas.length > 3){
-                        for(int it = 4; it < lexemas.length; it+=2 ){
+                        for(int it = 4; it < lexemas.length; it++ ){
                             if(isCorrectNameVariable(lexemas[it])){
                                 lexemas[it]= "<var>";   
-                            } else{
-                                boolean isDataType = false;
-                                switch(dataType){
-                                    case "entero":
-                                        isDataType = isCorrectFormatNumber( lexemas[it] );
-                                        break;
-                                    case "cadena":
-                                        isDataType = isCorrectFormatString(lexemas[it] );
-                                        break;
-                                    case "booleano":
-                                        isDataType = isCorrectFormatBoolean(lexemas[it] );
-                                        break;
-                                    default:
-                                        break;
-                                        
-                                }
-                                if(!isDataType){
-                                    new_renglon = "errorSintaxis";
-                                    break;
-                                }else{
+                            } else {
+                                // es numero
+                                if( isCorrectFormatNumber(lexemas[it])){
                                     lexemas[it]= "<val>";   
+                                }else if ( isCorrectFormatString(lexemas[it])) {
+                                    lexemas[it]= "<val>";   
+                                }else{
+                                    // retirar comentario para ver que es lo que evalua pero no identifica
+                                    //System.out.println(lexemas[it]);
                                 }
+                                // es simbolo
                             }
                         }
                    }

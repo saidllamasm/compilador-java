@@ -6,9 +6,9 @@ public class Depurador {
     
     //Metodo llamado para depurar, regresa el contenido depurado
     public String depurar(String file){
-        String new_file = filtroComentariosSimples(file); // //
-        new_file = filtroComentariosDobles(new_file); // /*../
-        new_file = filtroDobleEspacios(new_file);
+        //String new_file = filtroComentariosSimples(file); // //
+        //String new_file = new_file = filtroComentariosDobles(file); // /*../
+        String new_file = filtroDobleEspacios(file);
         new_file = filtroCaracteresVacios(new_file); // como tabs
         new_file = filtroEspacioFinal(new_file);
         new_file = filtroRenglonVacio(new_file); 

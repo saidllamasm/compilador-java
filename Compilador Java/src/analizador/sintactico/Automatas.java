@@ -3,7 +3,7 @@ package analizador.sintactico;
 
 public class Automatas {
     
-    private Automata INSTRUCCION_CREA[] = new Automata[8];
+    private Automata INSTRUCCION_CREA[] = new Automata[9];
     private Automata INSTRUCCION_IMPRIME[] = new Automata[3];
     private Automata INSTRUCCION_ASIGNA[] = new Automata[5];
     private Automata INSTRUCCION_CICLO[] = new Automata[7];
@@ -44,18 +44,29 @@ public class Automatas {
         
         INSTRUCCION_CREA[5].setId(new String[]{"="});
         INSTRUCCION_CREA[5].setAddress(new Automata[]{
-            INSTRUCCION_CREA[6]
+            INSTRUCCION_CREA[6],
+            INSTRUCCION_CREA[8]
         });
         
         INSTRUCCION_CREA[6].setId(new String[]{"<var>","<val>"});
         INSTRUCCION_CREA[6].setIsAccepted(true);
         INSTRUCCION_CREA[6].setAddress(new Automata[]{
-            INSTRUCCION_CREA[7]
+            INSTRUCCION_CREA[7],
+            INSTRUCCION_CREA[8]
         });
         
-        INSTRUCCION_CREA[7].setId(new String[]{"+","-"});
+        INSTRUCCION_CREA[7].setId(new String[]{"+","-", "*" , "/"});
         INSTRUCCION_CREA[7].setAddress(new Automata[]{
-            INSTRUCCION_CREA[6]
+            INSTRUCCION_CREA[6],
+            INSTRUCCION_CREA[8]
+        });
+        
+        INSTRUCCION_CREA[8].setId(new String[]{"(",")"});
+        INSTRUCCION_CREA[8].setIsAccepted(true);
+        INSTRUCCION_CREA[8].setAddress(new Automata[]{
+            INSTRUCCION_CREA[6],
+            INSTRUCCION_CREA[7],
+            INSTRUCCION_CREA[8]
         });
         
         // imprime

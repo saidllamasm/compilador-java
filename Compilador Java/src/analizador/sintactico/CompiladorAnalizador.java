@@ -36,6 +36,7 @@ public class CompiladorAnalizador {
         AnalizadorVariablesDeclaradas variablesDeclaradas = new AnalizadorVariablesDeclaradas();
         
         String bk_instruccion = instruccion;
+        int abre = 0, cierra = 0;
         
         if(instruccion.split(" ")[0].equals("crea")){
             String[] lexemas = instruccion.split(" ");
@@ -63,7 +64,7 @@ public class CompiladorAnalizador {
                             if(lexemas.length >= 4){
                                 int vals = 0, success = 0;
                                 String valores = "";
-                                for(int i = 4; i <= lexemas.length; i+=2){
+                                for(int i = 4; i < lexemas.length; i++){
                                     vals++;
                                     String[] res =  variablesDeclaradas.isRegisterVariable(lexemas[i]);
                                     //recorre solo cada valor o variable despues del simbolo =
@@ -90,21 +91,37 @@ public class CompiladorAnalizador {
                                         if(isDataType){
                                             success++;
                                             valores += ""+lexemas[i]+" ";
+                                        }else{
+                                            if(lexemas[i].equals("(")){
+                                                abre++;
+                                                success++;
+                                            }else if(lexemas[i].equals(")")){
+                                                cierra++;
+                                                success++;
+                                            } else if (lexemas[i].equals("+") || lexemas[i].equals("-") || lexemas[i].equals("/") || lexemas[i].equals("*")){
+                                                success++;
+                                            }
                                         }
                                         //System.out.println(CustomColors.RED+lexemas[i]+" "+msj.ERROR_VARIABLE_NOT_DECLARE);
                                         //break;
                                     }
                                 }
                                 if(vals==success){
-                                    Simbolo simbolo = new Simbolo(); 
-                                    simbolo.setNombre(lexemas[2]);
-                                    simbolo.setId("id");
-                                    simbolo.setValor(valores);
-                                    simbolo.setLectura(false);
-                                    simbolo.setTipo(lexemas[1]);
-                                    simbolos.add((simbolo));
-                                    System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
-                                    isCorrect = true;
+                                    if(abre == cierra){
+                                        //System.out.println("Expresion aceptada");
+                                        Simbolo simbolo = new Simbolo(); 
+                                        simbolo.setNombre(lexemas[2]);
+                                        simbolo.setId("id");
+                                        simbolo.setValor(valores);
+                                        simbolo.setLectura(false);
+                                        simbolo.setTipo(lexemas[1]);
+                                        simbolos.add((simbolo));
+                                        System.out.println(CustomColors.GREEN+bk_instruccion+" sucess");
+                                        isCorrect = true;
+                                        
+                                    }else{
+                                        System.out.println(CustomColors.RED+bk_instruccion+" invalid expresion");
+                                    }
                                 }
                                 /*else{
                                     System.out.println(CustomColors.CYAN+bk_instruccion+" "+ (vals-success)+"=no_success");
@@ -112,7 +129,7 @@ public class CompiladorAnalizador {
                             }
                         }
                     } else {
-                        System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE1020");
+                        System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE1026");
                     }
                 } else {
                     System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_VARIABLE_ALREADY_DEFINE+" or "+msj.ERROR_VARIABLE_TYPE_NOT_COMPATIBLE +" CE10224");
@@ -120,6 +137,7 @@ public class CompiladorAnalizador {
             } else{
                 System.out.println(CustomColors.RED+bk_instruccion+" "+msj.ERROR_STATEMENT+" CE1020");
             }
+            
             
         } else if(instruccion.split(" ")[0].equals("imprime")){
             String[] lexemas = instruccion.split(" ");
